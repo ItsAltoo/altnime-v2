@@ -14,10 +14,10 @@ import { clsx } from "clsx";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/winter", label: "Winter" },
-  { href: "/spring", label: "Spring" },
-  { href: "/summer", label: "Summer" },
-  { href: "/fall", label: "Fall" },
+  { href: "/seasons/winter", label: "Winter" },
+  { href: "/seasons/spring", label: "Spring" },
+  { href: "/seasons/summer", label: "Summer" },
+  { href: "/seasons/fall", label: "Fall" },
 ];
 
 function Navbar() {
