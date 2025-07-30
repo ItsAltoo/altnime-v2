@@ -1,22 +1,15 @@
-import { AnimeList } from "@/views/Seasons/AnimeList";
+import { ClientPage } from "@/views/Seasons/SeasonsView";
 import React from "react";
 
-interface SeasonPageProps {
-  params: { season: string };
-} 
-
-const page: React.FC<SeasonPageProps> = ({ params }) => {
+const page = async ({ params }: { params: Promise<{ season: string }> }) => {
   const currentYear = new Date().getFullYear();
-  const seasons = params.season;
+  const years = Array.from({ length: 13 }, (_, i) => currentYear + 2 - i);
+  const { season } = await params;
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold capitalize mb-4 text-center">
-        Anime Musim {seasons} {currentYear}
-      </h1>
-      <AnimeList year={`${currentYear}`} season={seasons} />
-    </div>
+    <ClientPage years={years} season={season} currentYear={currentYear} />
   );
 };
 
 export default page;
+

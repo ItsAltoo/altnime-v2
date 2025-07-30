@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { Icon } from "@iconify/react";
 import { clsx } from "clsx";
+import { useYearStore } from "@/lib/stores/useYearStore";
 
 const links = [
   { href: "/", label: "Home" },
@@ -22,6 +23,7 @@ const links = [
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const selectedYear = useYearStore((state) => state.selectedYear);
 
   const handleClose = () => setOpen(false);
 
@@ -40,7 +42,7 @@ function Navbar() {
           {links.map((l) => (
             <li key={l.href}>
               <Button variant="link">
-                <Link href={l.href} className="text-foreground">
+                <Link href={`${l.href}?year=${selectedYear}`} className="text-foreground">
                   {l.label}
                 </Link>
               </Button>
@@ -82,7 +84,7 @@ function Navbar() {
                   {links.map((l) => (
                     <li key={l.href}>
                       <Link
-                        href={l.href}
+                        href={`${l.href}?year=${selectedYear}`}
                         onClick={handleClose}
                         className={clsx(
                           "block rounded-md px-3 py-2 text-base font-medium ",

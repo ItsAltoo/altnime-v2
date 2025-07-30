@@ -30,12 +30,14 @@ export const AnimeList: React.FC<AnimeListProps> = ({ year, season }) => {
   useEffect(() => {
     const fetchAnime = async () => {
       setLoading(true);
+
       try {
         const res = await fetch(
-          `https://api.jikan.moe/v4/seasons/${year}/${season}`
+          `https://api.jikan.moe/v4/seasons/${year}/${season}?limit=21`
         );
         const data = await res.json();
-        setAnimes(data.data); // Jikan v4 menyimpan data di dalam "data"
+        setAnimes(data.data);
+
       } catch (err) {
         setError("Gagal memuat data anime.");
       } finally {
