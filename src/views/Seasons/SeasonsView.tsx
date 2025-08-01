@@ -42,7 +42,6 @@ export const ClientPage = ({
     router.replace(`?year=${year}`);
   };
 
-
   return (
     <div className="p-4">
       <div className="flex items-center justify-center gap-4 mb-4">
@@ -66,4 +65,4 @@ export const ClientPage = ({
       <AnimeList year={`${selectedYear}`} season={season} />
     </div>
   );
-}
+};

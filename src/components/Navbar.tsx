@@ -13,17 +13,17 @@ import { Icon } from "@iconify/react";
 import { clsx } from "clsx";
 import { useYearStore } from "@/lib/stores/useYearStore";
 
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/seasons/winter", label: "Winter" },
-  { href: "/seasons/spring", label: "Spring" },
-  { href: "/seasons/summer", label: "Summer" },
-  { href: "/seasons/fall", label: "Fall" },
-];
-
 function Navbar() {
   const [open, setOpen] = useState(false);
   const selectedYear = useYearStore((state) => state.selectedYear);
+
+  const links = [
+    { href: "/", label: "Home" },
+    { href: `/seasons/winter?year=${selectedYear}&page=1`, label: "Winter" },
+    { href: `/seasons/spring?year=${selectedYear}&page=1`, label: "Spring" },
+    { href: `/seasons/summer?year=${selectedYear}&page=1`, label: "Summer" },
+    { href: `/seasons/fall?year=${selectedYear}&page=1`, label: "Fall" },
+  ];
 
   const handleClose = () => setOpen(false);
 
@@ -32,7 +32,7 @@ function Navbar() {
       <nav className="flex h-full items-center justify-between px-4 sm:px-5">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <h1 className="text-2xl font-bold tracking-wide bg-gradient-to-br from-primary via-[#0065F8] to-[#00CAFF] text-transparent bg-clip-text  animate-pulse">
+          <h1 className="text-2xl font-bold tracking-wide bg-gradient-to-br from-primary via-[#0065F8] to-[#00CAFF] text-transparent bg-clip-text">
             AltNime
           </h1>
         </Link>
@@ -42,7 +42,7 @@ function Navbar() {
           {links.map((l) => (
             <li key={l.href}>
               <Button variant="link">
-                <Link href={`${l.href}?year=${selectedYear}`} className="text-foreground">
+                <Link href={l.href} className="text-foreground">
                   {l.label}
                 </Link>
               </Button>
@@ -71,7 +71,7 @@ function Navbar() {
               <SheetTitle>
                 <div className="flex items-center justify-center">
                   <Link href="/" className="flex items-center">
-                    <h1 className="text-2xl font-bold tracking-wide bg-gradient-to-br from-primary via-[#0065F8] to-[#00CAFF] text-transparent bg-clip-text  animate-pulse">
+                    <h1 className="text-2xl font-bold tracking-wide bg-gradient-to-br from-primary via-[#0065F8] to-[#00CAFF] text-transparent bg-clip-text">
                       AltNime
                     </h1>
                   </Link>
@@ -84,7 +84,7 @@ function Navbar() {
                   {links.map((l) => (
                     <li key={l.href}>
                       <Link
-                        href={`${l.href}?year=${selectedYear}`}
+                        href={l.href}
                         onClick={handleClose}
                         className={clsx(
                           "block rounded-md px-3 py-2 text-base font-medium ",
