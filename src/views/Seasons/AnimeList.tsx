@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Grid from "./Grid";
 import { PaginationComponent } from "@/components/Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
+import Loading from "./loading";
 
 interface Anime {
   mal_id: number;
@@ -26,6 +27,7 @@ export const AnimeList: React.FC<AnimeListProps> = ({ year, season }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [totalPages, setTotalPages] = useState(1);
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const pageParam = parseInt(searchParams.get("page") || "1", 10);
@@ -35,35 +37,56 @@ export const AnimeList: React.FC<AnimeListProps> = ({ year, season }) => {
     const fetchAnime = async () => {
       setLoading(true);
       setError("");
-      let limit = 25;
+      const targetCount = 24;
+      const excludedGenres = [12, 49]; // mal_id genres
       let uniqueMap = new Map<number, Anime>();
+      let currentPage = page;
+      let allDataFetched = false;
 
       try {
-        const res = await fetch(
-          `https://api.jikan.moe/v4/seasons/${year}/${season}?limit=${limit}&page=${page}`
-        );
-        const data = await res.json();
+        // Fetch multiple pages if needed to get exactly 24 anime
+        while (uniqueMap.size < targetCount && !allDataFetched) {
+          const res = await fetch(
+            `https://api.jikan.moe/v4/seasons/${year}/${season}?limit=25&page=${currentPage}`
+          );
+          const data = await res.json();
 
-        if (!data || !data.data) {
-          setError("Gagal memuat data anime.");
-          return;
+          if (!data || !data.data || data.data.length === 0) {
+            allDataFetched = true;
+            break;
+          }
+
+          data.data.forEach((anime: Anime) => {
+            // Skip if already have enough anime
+            if (uniqueMap.size >= targetCount) return;
+
+            const hasExcludedGenre = anime.genres?.some((genre) =>
+              excludedGenres.includes(genre.mal_id)
+            );
+
+            if (!hasExcludedGenre && !uniqueMap.has(anime.mal_id)) {
+              uniqueMap.set(anime.mal_id, anime);
+            }
+          });
+
+          // Set total pages from the first fetch
+          if (currentPage === page) {
+            setTotalPages(data.pagination.last_visible_page);
+          }
+
+          // Check if we've reached the last page
+          if (currentPage >= data.pagination.last_visible_page) {
+            allDataFetched = true;
+          } else {
+            currentPage++;
+          }
         }
 
-        data.data.forEach((anime: Anime) => {
-          const excludedGenres = [12, 49]; // mal_id genres
-
-          const hasExcludedGenre = anime.genres?.some((genre) =>
-            excludedGenres.includes(genre.mal_id)
-          );
-
-          if (!hasExcludedGenre) {
-            uniqueMap.set(anime.mal_id, anime); // Filter duplikat
-          }
-        });
-
-        const uniqueAnimes = Array.from(uniqueMap.values()).slice(0, 24);
+        const uniqueAnimes = Array.from(uniqueMap.values()).slice(
+          0,
+          targetCount
+        );
         setAnimes(uniqueAnimes);
-        setTotalPages(data.pagination.last_visible_page);
       } catch (err) {
         setError("Gagal memuat data anime.");
       } finally {
@@ -73,18 +96,19 @@ export const AnimeList: React.FC<AnimeListProps> = ({ year, season }) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", String(page));
 
+    router.replace(`?${params.toString()}`);
+
     fetchAnime();
-    router.push(`?${params.toString()}`);
   }, [year, season, page]);
 
-  if (loading)
-    return (
-      <p>
-        Loading anime {season} {year}...
-      </p>
-    );
+  if (loading) return <Loading />;
 
-  if (error) return <p>{error}</p>;
+  if (error)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-2xl">{error} Silahkan coba lagi.</p>
+      </div>
+    );
 
   return (
     <>
