@@ -102,8 +102,7 @@ export const AnimeList: React.FC<AnimeListProps> = ({ year, season }) => {
   }, [year, season, page]);
 
   if (loading) return <Loading />;
-
-  if (error)
+  else if (error)
     return (
       <div className="flex justify-center items-center h-screen">
         <p className="text-2xl">{error} Silahkan coba lagi.</p>

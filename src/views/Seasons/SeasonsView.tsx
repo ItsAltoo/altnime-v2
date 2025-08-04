@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useYearStore } from "@/lib/stores/useYearStore";
 
-export const ClientPage = ({
+export const SeasonsView = ({
   years,
   season,
   currentYear,
