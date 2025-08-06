@@ -1,9 +1,9 @@
+import MainView from "@/views/Main/MainView";
+
 export default function Home() {
   return (
     <>
-      <section className="h-screen">
-
-      </section>
+      <MainView />
     </>
   );
 }

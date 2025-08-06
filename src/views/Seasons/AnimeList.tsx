@@ -53,6 +53,7 @@ export const AnimeList: React.FC<AnimeListProps> = ({ year, season }) => {
 
           if (!data || !data.data || data.data.length === 0) {
             allDataFetched = true;
+            setError("Tidak ada data anime yang ditemukan.");
             break;
           }
 
