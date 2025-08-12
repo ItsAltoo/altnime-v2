@@ -12,18 +12,40 @@ import {
 import { Icon } from "@iconify/react";
 import { clsx } from "clsx";
 import { useYearStore } from "@/lib/stores/useYearStore";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuTrigger,
+} from "./ui/navigation-menu";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   const selectedYear = useYearStore((state) => state.selectedYear);
 
-  const links = [
-    { href: "/", label: "Home" },
-    { href: `/seasons/winter?year=${selectedYear}&page=1`, label: "Winter" },
-    { href: `/seasons/spring?year=${selectedYear}&page=1`, label: "Spring" },
-    { href: `/seasons/summer?year=${selectedYear}&page=1`, label: "Summer" },
-    { href: `/seasons/fall?year=${selectedYear}&page=1`, label: "Fall" },
-  ];
+  const links = {
+    mainLinks: [
+      {
+        href: "/",
+        label: "Home",
+      },
+    ],
+    seasons: [
+      {
+        href: `/seasons/winter?year=${selectedYear}&page=1`,
+        label: "Winter",
+      },
+      {
+        href: `/seasons/spring?year=${selectedYear}&page=1`,
+        label: "Spring",
+      },
+      {
+        href: `/seasons/summer?year=${selectedYear}&page=1`,
+        label: "Summer",
+      },
+      { href: `/seasons/fall?year=${selectedYear}&page=1`, label: "Fall" },
+    ],
+  };
 
   const handleClose = () => setOpen(false);
 
@@ -39,7 +61,7 @@ function Navbar() {
 
         {/* ------- Desktop Menu ------- */}
         <ul className="hidden items-center gap-6 md:flex">
-          {links.map((l) => (
+          {links.mainLinks.map((l) => (
             <li key={l.href}>
               <Button variant="link">
                 <Link href={l.href} className="text-foreground">
@@ -48,6 +70,25 @@ function Navbar() {
               </Button>
             </li>
           ))}
+          {/* Seasons */}
+          <NavigationMenu viewport={false}>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className="bg-transparent">Seasons</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="flex flex-col w-20">
+                  {links.seasons.map((l) => (
+                    <li key={l.href}>
+                      <Button variant="link">
+                        <Link href={l.href} className="text-foreground">
+                          {l.label}
+                        </Link>
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenu>
         </ul>
 
         {/* ------- Mobile Menu ------- */}
@@ -71,7 +112,7 @@ function Navbar() {
               <SheetTitle>
                 <div className="flex items-center justify-center">
                   <Link href="/" className="flex items-center">
-                    <h1 className="text-2xl font-bold tracking-wide bg-gradient-to-br from-primary via-[#0065F8] to-[#00CAFF] text-transparent bg-clip-text">
+                    <h1 className="text-2xl mt-3 font-bold tracking-wide bg-gradient-to-br from-primary via-[#0065F8] to-[#00CAFF] text-transparent bg-clip-text">
                       AltNime
                     </h1>
                   </Link>
@@ -81,7 +122,7 @@ function Navbar() {
               {/* Link list */}
               <SheetHeader>
                 <ul className="flex flex-col gap-3">
-                  {links.map((l) => (
+                  {links.seasons.map((l) => (
                     <li key={l.href}>
                       <Link
                         href={l.href}

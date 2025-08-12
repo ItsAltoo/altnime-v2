@@ -10,22 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { AnimeCard } from "./Card";
 import { CardCarouselSkeleton } from "./CardCarouselLoad";
-
-interface Anime {
-  mal_id: number;
-  title: string;
-  images: { jpg: { image_url: string } };
-  score: number;
-  episodes: number;
-  type: string;
-  url: string;
-  genres: { mal_id: number }[];
-}
-interface AnimeCarouselProps {
-  title: string;
-  filter?: string;
-  limit?: number;
-}
+import { Anime,AnimeCarouselProps } from "@/types";
 
 const excludedGenres = [12, 49];
 // Global cache
@@ -238,7 +223,7 @@ export function AnimeCarousel({
                   score={anime.score}
                   episodes={anime.episodes}
                   type={anime.type}
-                  url={anime.url}
+                  mal_id={anime.mal_id}
                 />
               </CarouselItem>
             ))}

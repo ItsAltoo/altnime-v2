@@ -10,13 +10,13 @@ const MainView = () => {
         <Hero />
       </section>
 
-      <section className="">
+      <section className="mt-20">
         {/* Top Anime */}
+        <AnimeCarousel title="Top Anime Overall" />
         <AnimeCarousel title="Top Airing Anime" filter="airing" />
         <AnimeCarousel title="Upcoming Anime" filter="upcoming" />
         <AnimeCarousel title="Popular Anime" filter="bypopularity" />
         <AnimeCarousel title="Favorite Anime" filter="favorite" />
-        <AnimeCarousel title="Top Anime Overall" />
       </section>
     </>
   );

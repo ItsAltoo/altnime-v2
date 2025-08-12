@@ -1,8 +1,9 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import Grid from "@/views/Seasons/Grid";
 
 export default function Loading() {
   return (
-    <div className="grid grid-cols-6 gap-4 p-4">
+    <Grid>
       {Array.from({ length: 12 }).map((_, i) => (
         <div key={i} className="space-y-3">
           <Skeleton className="h-[250px] w-full rounded-xl" />
@@ -10,6 +11,6 @@ export default function Loading() {
           <Skeleton className="h-4 w-1/2" />
         </div>
       ))}
-    </div>
+    </Grid>
   );
 }

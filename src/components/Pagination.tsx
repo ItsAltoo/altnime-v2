@@ -3,19 +3,14 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { PaginationProps } from "@/types";
 import React from "react";
 
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-}
 
 export const PaginationComponent: React.FC<PaginationProps> = ({
   currentPage,

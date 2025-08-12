@@ -1,5 +1,5 @@
 "use client";
-import { AnimeList } from "@/views/Seasons/AnimeList";
+import { AnimeList } from "@/components/layout/AnimeList";
 import {
   DropdownMenu,
   DropdownMenuContent,

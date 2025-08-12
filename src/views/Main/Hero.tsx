@@ -11,7 +11,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay"; // Import plugin autoplay
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import Image from "next/image"; // Gunakan Next/Image untuk optimasi
@@ -123,7 +123,7 @@ const Hero = () => {
                       >
                         <Link href={anime.url} target="_blank">
                           <BookIcon className="mr-2 size-4" />
-                          MyAnimeList
+                          Bookmark
                         </Link>
                       </Button>
                     </div>

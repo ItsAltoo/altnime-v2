@@ -10,23 +10,15 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import Link from "next/link";
-
-type AnimeCardProps = {
-  title: string;
-  imageUrl: string;
-  score: number;
-  episodes: number;
-  type: string;
-  url: string;
-};
+import { AnimeCardProps } from "@/types";
 
 export function AnimeCard({
+  mal_id,
   title,
   imageUrl,
   score,
   episodes,
   type,
-  url,
 }: AnimeCardProps) {
   return (
     <Card className="w-full max-w-sm h-full shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
@@ -36,8 +28,9 @@ export function AnimeCard({
             src={imageUrl}
             alt={title}
             className="rounded-t-md object-cover"
-            fill
             sizes="(max-width: 768px) 100vw, 33vw"
+            fill
+            priority={true}
           />
         </div>
       </CardHeader>
@@ -58,7 +51,7 @@ export function AnimeCard({
 
       <CardFooter className="px-4 pb-4">
         <Button asChild className="w-full">
-          <Link href={url} target="_blank" rel="noopener noreferrer">
+          <Link href={`/anime/${mal_id}`} rel="noopener noreferrer">
             Detail Anime
           </Link>
         </Button>
