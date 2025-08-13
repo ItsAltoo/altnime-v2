@@ -73,7 +73,9 @@ function Navbar() {
           {/* Seasons */}
           <NavigationMenu viewport={false}>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent">Seasons</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="bg-transparent">
+                Seasons
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="flex flex-col w-20">
                   {links.seasons.map((l) => (

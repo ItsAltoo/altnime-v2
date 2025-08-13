@@ -8,7 +8,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import Link from "next/link";
 import { AnimeCardProps } from "@/types";
 
@@ -53,6 +53,7 @@ export function AnimeCard({
         <Button asChild className="w-full">
           <Link href={`/anime/${mal_id}`} rel="noopener noreferrer">
             Detail Anime
+            <ArrowRight className="ml-2 size-4" />
           </Link>
         </Button>
       </CardFooter>

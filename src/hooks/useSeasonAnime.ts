@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Anime } from "@/types";
-import jikan from "@/lib/jikan";
+import jikan from "@/lib/api";
 
 export function useSeasonAnime(year: number, season: string) {
   const [animes, setAnimes] = useState<Anime[]>([]);

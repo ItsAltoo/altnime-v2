@@ -1,5 +1,4 @@
 "use client";
-
 import { ArrowRight, ArrowUpRight, BookIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,63 +9,23 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay"; // Import plugin autoplay
-import React, { useState, useEffect } from "react";
+import Autoplay from "embla-carousel-autoplay";
+import React from "react";
 import Link from "next/link";
-import axios from "axios";
-import Image from "next/image"; // Gunakan Next/Image untuk optimasi
+import Image from "next/image";
 import { HeroSkeleton } from "./HeroLoading";
-
-interface Anime {
-  mal_id: number;
-  title: string;
-  images: { jpg: { image_url: string; large_image_url: string } };
-  score: number;
-  episodes: number;
-  type: string;
-  url: string;
-  synopsis: string;
-  background: string;
-}
+import { useTopAnime } from "@/hooks/useTopAnime";
 
 const Hero = () => {
-  // Ubah state untuk menampung array of Anime
-  const [topAnimes, setTopAnimes] = useState<Anime[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchTopAnimes = async () => {
-      try {
-        // Ubah limit untuk mendapatkan beberapa anime untuk carousel
-        const res = await axios.get(
-          "https://api.jikan.moe/v4/top/anime?filter=airing&limit=5"
-        );
-        if (res.data && res.data.data && res.data.data.length > 0) {
-          // Set seluruh data array ke state
-          setTopAnimes(res.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching top anime:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTopAnimes();
-  }, []);
+  const { topAnimes, loading, error } = useTopAnime({ limit: 5 });
 
   if (loading) {
-    return (
-      <HeroSkeleton />
-    );
-  }
-
-  // Ubah kondisi untuk memeriksa jika array kosong
-  if (topAnimes.length === 0) {
+    return <HeroSkeleton />;
+  } else if (topAnimes.length === 0 || error) {
     return (
       <section className="flex h-[80vh] items-center justify-center">
         <div className="container text-center">
-          Tidak ada data anime yang sedang tayang.
+          There is no data for currently airing anime.
         </div>
       </section>
     );

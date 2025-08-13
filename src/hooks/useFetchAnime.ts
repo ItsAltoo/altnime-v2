@@ -1,8 +1,10 @@
-// src/hooks/useJikanFetch.ts
 import { useEffect, useState } from "react";
-import jikan from "@/lib/jikan";
+import jikan from "@/lib/api";
 
-export function useJikanFetch<T = any>(endpoint: string, params?: Record<string, any>) {
+export function useJikanFetch<T = any>(
+  endpoint: string,
+  params?: Record<string, any>
+) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,7 +28,7 @@ export function useJikanFetch<T = any>(endpoint: string, params?: Record<string,
     return () => {
       isMounted = false;
     };
-  }, [endpoint, JSON.stringify(params)]); // stringify supaya param jadi dependency yang valid
+  }, [endpoint, JSON.stringify(params)]);
 
   return { data, loading, error };
 }

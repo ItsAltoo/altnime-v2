@@ -62,7 +62,7 @@ export const SeasonsView = ({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <AnimeList year={`${selectedYear}`} season={season} />
+      <AnimeList year={selectedYear} season={season} />
     </div>
   );
 };
