@@ -68,9 +68,6 @@ export function useSeasonAnime(year: number, season: string) {
         .finally(() => {
           if (isMounted) setLoading(false);
         });
-      return () => {
-        isMounted = false;
-      };
     }
 
     // update query string "page" di URL
