@@ -14,10 +14,13 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { HeroSkeleton } from "./HeroLoading";
-import { useTopAnime } from "@/hooks/useTopAnime";
+import { useHero } from "@/hooks/useHeroAnime";
 
 const Hero = () => {
-  const { topAnimes, loading, error } = useTopAnime({ limit: 5 });
+  const { topAnimes, loading, error } = useHero({
+    filter: "airing",
+    limit: 5,
+  });
 
   if (loading) {
     return <HeroSkeleton />;

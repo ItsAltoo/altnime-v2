@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Anime } from "@/types";
-import jikan from "@/lib/api";
+import { jikan } from "@/services/api";
 
 export function useSeasonAnime(year: number, season: string) {
   const [animes, setAnimes] = useState<Anime[]>([]);
@@ -11,20 +11,20 @@ export function useSeasonAnime(year: number, season: string) {
 
   const searchParams = useSearchParams();
   const router = useRouter();
+
   const pageParam = parseInt(searchParams.get("page") || "1", 10);
   const [page, setPage] = useState(pageParam);
 
   useEffect(() => {
+    let isMounted = true;
     setLoading(true);
     setError("");
+
     const targetCount = 24;
     const excludedGenres = [12, 49];
-    let uniqueMap = new Map<number, Anime>();
-    let currentPage = page;
-    let allDataFetched = false;
-    let isMounted = true;
+    const uniqueMap = new Map<number, Anime>();
 
-    while (uniqueMap.size < targetCount && !allDataFetched) {
+    const fetchPage = (currentPage: number) => {
       jikan
         .get(`/seasons/${year}/${season}`, {
           params: {
@@ -34,46 +34,58 @@ export function useSeasonAnime(year: number, season: string) {
         })
         .then((res) => {
           const data = res.data;
-          if (!data || !data.data || data.data.length === 0) {
-            allDataFetched = true;
-            setError("Tidak ada data anime yang ditemukan.");
+
+          if (!data?.data?.length) {
+            if (isMounted) setError("No anime data found.");
+            return;
           }
 
+          // set total pages dari halaman awal saja
+          if (currentPage === page && isMounted) {
+            setTotalPages(data.pagination.last_visible_page);
+          }
+
+          // filter & simpan anime unik
           data.data.forEach((anime: Anime) => {
             if (uniqueMap.size >= targetCount) return;
-
             const hasExcludedGenre = anime.genres?.some((genre) =>
               excludedGenres.includes(genre.mal_id)
             );
-
             if (!hasExcludedGenre && !uniqueMap.has(anime.mal_id)) {
               uniqueMap.set(anime.mal_id, anime);
             }
           });
 
-          if (currentPage === page) {
-            setTotalPages(data.pagination.last_visible_page);
-          }
-
-          if (currentPage >= data.pagination.last_visible_page) {
-            allDataFetched = true;
+          // kalau masih kurang dari target dan belum sampai akhir halaman, lanjut fetch
+          if (
+            uniqueMap.size < targetCount &&
+            currentPage < data.pagination.last_visible_page
+          ) {
+            fetchPage(currentPage + 1);
           } else {
-            currentPage++;
+            if (isMounted) {
+              setAnimes(Array.from(uniqueMap.values()));
+              setLoading(false);
+            }
           }
-          setAnimes(Array.from(uniqueMap.values()).slice(0, targetCount));
         })
         .catch((err) => {
-          if (isMounted) setError(err.message);
-        })
-        .finally(() => {
-          if (isMounted) setLoading(false);
+          if (isMounted) {
+            setError(err.message);
+            setLoading(false);
+          }
         });
     }
 
-    // update query string "page" di URL
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams.toString());
     params.set("page", String(page));
     router.replace(`?${params.toString()}`);
+
+    fetchPage(page);
+
+    return () => {
+      isMounted = false;
+    };
   }, [year, season, page]);
 
   return { animes, loading, error, totalPages, page, setPage };
