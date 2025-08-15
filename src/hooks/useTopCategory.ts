@@ -3,8 +3,15 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Anime } from "@/types";
 import { jikan } from "@/services/api";
 
-export function useSeasonAnime(year: number, season: string) {
-  const [animes, setAnimes] = useState<Anime[]>([]);
+interface Data extends Anime {
+  name: string;
+  chapters?: number;
+  volumes?: number;
+  status?: string;
+}
+
+export function useTopCategory(category: string, limit: number) {
+  const [topAnimes, setTopAnimes] = useState<Data[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [totalPages, setTotalPages] = useState(1);
@@ -20,15 +27,15 @@ export function useSeasonAnime(year: number, season: string) {
     setLoading(true);
     setError("");
 
-    const targetCount = 24;
+    const targetCount = limit;
     const excludedGenres = [12, 49];
-    const uniqueMap = new Map<number, Anime>();
+    const uniqueMap = new Map<number, Data>();
 
     const fetchPage = (currentPage: number) => {
       jikan
-        .get(`/seasons/${year}/${season}`, {
+        .get(`/top/${category}`, {
           params: {
-            limit: 25,
+            limit,
             page: currentPage,
           },
         })
@@ -52,7 +59,7 @@ export function useSeasonAnime(year: number, season: string) {
               excludedGenres.includes(genre.mal_id)
             );
             if (!hasExcludedGenre && !uniqueMap.has(anime.mal_id)) {
-              uniqueMap.set(anime.mal_id, anime);
+              uniqueMap.set(anime.mal_id, anime as Data);
             }
           });
 
@@ -64,7 +71,7 @@ export function useSeasonAnime(year: number, season: string) {
             fetchPage(currentPage + 1);
           } else {
             if (isMounted) {
-              setAnimes(Array.from(uniqueMap.values()));
+              setTopAnimes(Array.from(uniqueMap.values()));
               setLoading(false);
             }
           }
@@ -77,18 +84,16 @@ export function useSeasonAnime(year: number, season: string) {
         });
     };
 
-    fetchPage(page);
-
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", String(page));
-    params.set("year", String(year));
-    router.replace(`?year=${year}&page=${page}`);
+    router.replace(`?${params.toString()}`);
 
+    fetchPage(page);
 
     return () => {
       isMounted = false;
     };
-  }, [year, season, page]);
+  }, [category, page]);
 
-  return { animes, loading, error, totalPages, page, setPage };
+  return { topAnimes, loading, error, totalPages, page, setPage };
 }

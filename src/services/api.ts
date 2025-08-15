@@ -4,7 +4,7 @@ import axios, {
   AxiosError,
   CancelToken,
 } from "axios";
-import { Anime, AnimeDetail } from "@/types";
+import { Anime } from "@/types";
 
 export const jikan = axios.create({
   baseURL: "https://api.jikan.moe/v4",
@@ -54,7 +54,7 @@ const createAxiosInstance = (): AxiosInstance => {
   return jikan;
 };
 
-const axiosInstance = createAxiosInstance();
+export const axiosInstance = createAxiosInstance();
 export const animeCache = new Map<string, any>();
 const etagCache = new Map<string, string>();
 const excludedGenres = [12, 49];
@@ -64,7 +64,6 @@ export const fetchAnimeData = async (
   limit: number,
   cancelToken: CancelToken
 ): Promise<Anime[]> => {
-  
   const cacheKey = `${filter}-${limit}`;
   if (animeCache.has(cacheKey)) {
     return animeCache.get(cacheKey)!;
@@ -72,7 +71,6 @@ export const fetchAnimeData = async (
   const uniqueMap = new Map<number, Anime>();
   let page = 1;
   while (uniqueMap.size < limit && page <= 5) {
-    
     const response = await axiosInstance.get("/top/anime", {
       params: { filter, limit: 25, page },
       cancelToken,
@@ -90,33 +88,4 @@ export const fetchAnimeData = async (
   const finalData = Array.from(uniqueMap.values()).slice(0, limit);
   animeCache.set(cacheKey, finalData);
   return finalData;
-};
-
-/**
- * BARU: Fungsi untuk mengambil detail anime berdasarkan ID.
- * @param {number} id - MAL ID dari anime.
- * @param {CancelToken} cancelToken - Token untuk membatalkan request.
- * @returns {Promise<AnimeDetail>} Detail dari sebuah anime.
- */
-export const fetchAnimeById = async (
-  id: number,
-  cancelToken: CancelToken
-): Promise<AnimeDetail> => {
-  const cacheKey = `anime-detail-${id}`;
-  if (animeCache.has(cacheKey)) {
-    return animeCache.get(cacheKey)!;
-  }
-
-  try {
-    const response = await axiosInstance.get(`/anime/${id}/full`, {
-      cancelToken,
-    });
-
-    const animeDetail = response.data.data;
-    animeCache.set(cacheKey, animeDetail); 
-    return animeDetail;
-  } catch (error) {
-    console.error(`Gagal mengambil detail untuk anime ID ${id}:`, error);
-    throw error;
-  }
 };

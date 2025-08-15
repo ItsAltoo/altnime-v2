@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { AnimeCard } from "@/components/Card";
-import Grid from "../../views/Seasons/Grid";
+import Grid from "../Grid";
 import { PaginationComponent } from "@/components/Pagination";
 import Loading from "./AnimeListLoad";
 import { useSeasonAnime } from "@/hooks/useSeasonAnime";

@@ -24,14 +24,20 @@ interface Aired {
 export interface Anime {
   mal_id: number;
   title: string;
-  images: { jpg: ImageTypes; webp: ImageTypes };
+  images: { jpg: ImageTypes; webp?: ImageTypes };
   score: number;
   episodes: number;
   type: string;
-  url: string;
-  genres: { mal_id: number }[];
-  synopsis: string;
-  background: string;
+  url?: string;
+  genres?: { mal_id: number }[];
+  synopsis?: string;
+  background?: string;
+}
+
+export interface Manga {
+  chapters?: number;
+  volumes?: number;
+  status?: string;
 }
 
 export interface AnimeDetail {
@@ -113,6 +119,7 @@ export interface AnimeDetail {
   }[];
 }
 
+// Props
 export interface AnimeCarouselProps {
   title: string;
   filter?: string;
@@ -126,12 +133,15 @@ export interface PaginationProps {
 }
 
 export interface AnimeCardProps {
-  mal_id: number;
-  title: string;
-  imageUrl: string;
-  score: number;
-  episodes: number;
-  type: string;
+  mal_id?: number;
+  title?: string;
+  imageUrl?: string;
+  score?: number;
+  episodes?: number;
+  type?: string;
+  status?: string;
+  chapters?: number;
+  name?: string;
 }
 
 export interface FooterProps {

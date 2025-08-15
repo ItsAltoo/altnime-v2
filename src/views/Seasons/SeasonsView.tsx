@@ -1,5 +1,5 @@
 "use client";
-import { AnimeList } from "@/components/layout/AnimeList";
+import { AnimeList } from "@/views/Seasons/layout/AnimeList";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useYearStore } from "@/lib/stores/useYearStore";
 
 export const SeasonsView = ({
@@ -20,7 +20,6 @@ export const SeasonsView = ({
   season: string;
   currentYear: number;
 }) => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const storeYear = useYearStore((state) => state.selectedYear);
   const setYearGlobal = useYearStore((state) => state.setYear);
@@ -39,7 +38,6 @@ export const SeasonsView = ({
   const handleChangeYear = (year: number) => {
     setSelectedYear(year);
     setYearGlobal(year);
-    router.replace(`?year=${year}`);
   };
 
   return (
