@@ -37,7 +37,6 @@ export function useSeasonAnime(year: number, season: string) {
 
           if (!data?.data?.length || data.data.length === 0) {
             if (isMounted) setError("No anime data found.");
-            return;
           }
 
           // set total pages dari halaman awal saja
@@ -83,7 +82,6 @@ export function useSeasonAnime(year: number, season: string) {
     params.set("page", String(page));
     params.set("year", String(year));
     router.replace(`?year=${year}&page=${page}`);
-
 
     return () => {
       isMounted = false;

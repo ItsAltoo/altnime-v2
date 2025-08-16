@@ -53,10 +53,11 @@ const Hero = () => {
               >
                 {/* 2. Tambahkan gambar sebagai background */}
                 <Image
-                  src={anime.images.jpg.large_image_url}
+                  src={anime.images.webp.large_image_url}
                   alt={`${anime.title} background`}
+                  
                   fill
-                  className="object-cover -z-10 blur-xs brightness-[0.2]"
+                  className="object-cover -z-10 blur-xs brightness-[0.2] opacity-75"
                   priority={topAnimes.indexOf(anime) === 0}
                 />
                 <div className="flex flex-col-reverse items-center justify-around gap-8 p-1 lg:flex-row w-full">

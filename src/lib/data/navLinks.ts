@@ -11,8 +11,12 @@ export interface NavItem {
 // Function untuk generate nav links dengan selectedYear
 export const getNavLinks = (selectedYear: string | number): NavItem[] => [
   {
-    href: "/",
     label: "Home",
+    href: "/",
+  },
+  {
+    label: "Library",
+    href: '/library',
   },
   {
     label: "Seasons",

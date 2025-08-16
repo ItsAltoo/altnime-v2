@@ -136,11 +136,22 @@ function Navbar() {
               {/* Logo di panel */}
               <SheetTitle>
                 <div className="flex items-center justify-center">
-                  <Link href="/" className="flex items-center">
-                    <h1 className="text-2xl mt-3 font-bold tracking-wide bg-gradient-to-br from-primary via-[#0065F8] to-[#00CAFF] text-transparent bg-clip-text">
-                      AltNime
-                    </h1>
-                  </Link>
+                  <div className="hidden md:flex items-center gap-2 w-full max-w-sm">
+                    <div className="relative flex-1">
+                      <Search
+                        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-secondary cursor-pointer"
+                        size={18}
+                        onClick={handleSearch}
+                      />
+                      <Input
+                        type="text"
+                        placeholder="Search..."
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        className="pl-10"
+                      />
+                    </div>
+                  </div>
                 </div>
               </SheetTitle>
 

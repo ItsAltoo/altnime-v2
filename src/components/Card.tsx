@@ -22,6 +22,7 @@ export function AnimeCard({
   type,
   status,
   name,
+  category,
 }: AnimeCardProps) {
   return (
     <Card className="w-full max-w-sm h-full shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
@@ -29,7 +30,7 @@ export function AnimeCard({
         <div className="w-full aspect-[2/3] relative">
           <Image
             src={imageUrl ? imageUrl : ""}
-            alt={title ? title : ""}
+            alt={title ? title : `${name}`}
             className="rounded-t-md object-cover"
             sizes="(max-width: 768px) 100vw, 33vw"
             fill
@@ -65,7 +66,7 @@ export function AnimeCard({
 
       <CardFooter className="px-4 pb-4">
         <Button asChild className="w-full">
-          <Link href={`/anime/${mal_id}`} rel="noopener noreferrer">
+          <Link href={`/${category || "anime"}/${mal_id}`} rel="noopener noreferrer">
             More Details
             <ArrowRight className="ml-1 size-4" />
           </Link>

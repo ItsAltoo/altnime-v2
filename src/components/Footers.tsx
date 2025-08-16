@@ -1,24 +1,6 @@
 import { FooterProps } from "@/types";
+import Image from "next/image";
 import React from "react";
-import { FaInstagram, FaGlobe, FaGithub } from "react-icons/fa";
-
-const defaultSocialLinks = [
-  {
-    icon: <FaInstagram className="size-5" />,
-    href: "https://www.instagram.com/malik_qit/",
-    label: "Instagram",
-  },
-  {
-    icon: <FaGithub className="size-5" />,
-    href: "https://github.com/ItsAltoo",
-    label: "Github",
-  },
-  {
-    icon: <FaGlobe className="size-5" />,
-    href: "https://www.itsmalik.tech",
-    label: "Website",
-  },
-];
 
 const defaultLegalLinks = [
   { name: "Terms of Use", href: "#" },
@@ -27,13 +9,12 @@ const defaultLegalLinks = [
 
 const items: FooterProps = {
   logo: {
-    url: "https://www.itsmalik.tech",
-    src: "Monica.jpeg",
+    src: "/Monica.jpeg",
     alt: "logo",
     title: "ItsAlto",
   },
-  description: "Anime and manga data is provided by MyAnimeList via the Jikan API. This project is not affiliated with MyAnimeList.net.",
-  socialLinks: defaultSocialLinks,
+  description:
+    "Anime and manga data is provided by MyAnimeList via the Jikan API. This project is not affiliated with MyAnimeList.net.",
   copyright: "© 2025 AltNime. All rights reserved.",
   legalLinks: defaultLegalLinks,
 };
@@ -45,35 +26,20 @@ const Footer = () => {
         <div className="flex w-full flex-col items-center justify-between gap-10 text-center lg:flex-row lg:items-start lg:text-left">
           <div className="flex w-full flex-col items-center justify-between gap-6 lg:w-auto lg:items-start">
             <div className="flex items-center justify-center gap-2 lg:justify-start">
-              <a href={items.logo.url}>
-                <img
+                <Image
                   src={items.logo.src}
                   alt={items.logo.alt}
                   title={items.logo.title}
                   className="w-12 h-12 rounded-full object-cover"
+                  height={52}
+                  width={52}
                 />
-              </a>
               <h2 className="text-xl font-semibold">{items.logo.title}</h2>
             </div>
 
-            <p className="text-muted-foreground max-w-xs text-sm lg:max-w-[30%]">
+            <p className="text-muted-foreground max-w-xs text-sm lg:max-w-lg">
               {items.description}
             </p>
-
-            <ul className="text-muted-foreground flex items-center space-x-6">
-              {items.socialLinks?.map((social, idx) => (
-                <li key={idx} className="font-medium hover:text-primary">
-                  <a
-                    href={social.href}
-                    aria-label={social.label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {social.icon}
-                  </a>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
 

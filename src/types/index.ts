@@ -24,11 +24,11 @@ interface Aired {
 export interface Anime {
   mal_id: number;
   title: string;
-  images: { jpg: ImageTypes; webp?: ImageTypes };
+  images: { jpg: ImageTypes; webp: ImageTypes };
   score: number;
   episodes: number;
   type: string;
-  url?: string;
+  url: string;
   genres?: { mal_id: number }[];
   synopsis?: string;
   background?: string;
@@ -142,11 +142,11 @@ export interface AnimeCardProps {
   status?: string;
   chapters?: number;
   name?: string;
+  category?: string;
 }
 
 export interface FooterProps {
   logo: {
-    url: string;
     src: string;
     alt: string;
     title: string;

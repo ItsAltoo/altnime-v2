@@ -36,6 +36,7 @@ export const AnimeList = ({ limit }: { limit: number }) => {
             chapters={anime.chapters}
             type={anime.type}
             mal_id={anime.mal_id}
+            category={`${category}`}
           />
         ))}
       </Grid>
