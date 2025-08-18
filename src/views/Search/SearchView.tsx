@@ -1,19 +1,14 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AnimeCard } from "@/components/Card";
 import { PaginationComponent } from "@/components/Pagination";
 import Grid from "../Seasons/Grid";
+import { useAnimeSearch } from "@/hooks/useAnimeSearch";
 import Loading from "../Seasons/layout/AnimeListLoad";
-import { useParams, useSearchParams } from "next/navigation";
-import { useTopCategory } from "@/hooks/useTopCategory";
 
 export const AnimeList = ({ limit }: { limit: number }) => {
-  const { category } = useParams();
-  const searchParams = useSearchParams();
-  const filter = searchParams.get("filter") || "";
 
-  const { topAnimes, loading, error, page, setPage, totalPages } =
-    useTopCategory(category as string, limit, filter);
+  const { results, loading, error,page,setPage,totalPages } = useAnimeSearch({ limit });
 
   if (loading) return <Loading />;
   else if (error)
@@ -26,7 +21,7 @@ export const AnimeList = ({ limit }: { limit: number }) => {
   return (
     <>
       <Grid>
-        {topAnimes.map((anime) => (
+        {results.map((anime) => (
           <AnimeCard
             status={anime.status}
             key={anime.mal_id}
@@ -38,7 +33,6 @@ export const AnimeList = ({ limit }: { limit: number }) => {
             chapters={anime.chapters}
             type={anime.type}
             mal_id={anime.mal_id}
-            category={`${category}`}
           />
         ))}
       </Grid>

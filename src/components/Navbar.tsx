@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -26,19 +27,11 @@ import { useYearStore } from "@/lib/stores/useYearStore";
 import { getNavLinks } from "@/lib/data/navLinks";
 import { Input } from "./ui/input";
 import { Search } from "lucide-react";
-import { jikan } from "@/services/api";
+import SearchBar from "./SearchBar";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   const selectedYear = useYearStore((state) => state.selectedYear);
-  const [query, setQuery] = useState("");
-
-  const handleSearch = () => {
-    if (!query.trim()) return;
-    jikan.get(`/search/anime?q=${query}`).then((response) => {
-      console.log("Search results:", response.data);
-    });
-  };
 
   const navLinks = getNavLinks(selectedYear);
 
@@ -100,18 +93,7 @@ function Navbar() {
           {/* Search Bar */}
           <div className="hidden md:flex items-center gap-2 w-full max-w-sm">
             <div className="relative flex-1">
-              <Search
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-secondary cursor-pointer"
-                size={18}
-                onClick={handleSearch}
-              />
-              <Input
-                type="text"
-                placeholder="Search..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="pl-10"
-              />
+              <SearchBar />
             </div>
           </div>
         </div>
@@ -128,28 +110,18 @@ function Navbar() {
                 />
               </Button>
             </SheetTrigger>
-
+  
             <SheetContent
               side="top"
               className="w-full bg-black/60 backdrop-blur-2xl"
+              aria-describedby={undefined}
             >
-              {/* Logo di panel */}
+              {/* Search di panel */}
               <SheetTitle>
                 <div className="flex items-center justify-center">
-                  <div className="hidden md:flex items-center gap-2 w-full max-w-sm">
-                    <div className="relative flex-1">
-                      <Search
-                        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-secondary cursor-pointer"
-                        size={18}
-                        onClick={handleSearch}
-                      />
-                      <Input
-                        type="text"
-                        placeholder="Search..."
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        className="pl-10"
-                      />
+                  <div className="md:hidden flex items-center w-full max-w-sm">
+                    <div className="relative flex-1 mt-12 mx-7">
+                      <SearchBar />
                     </div>
                   </div>
                 </div>

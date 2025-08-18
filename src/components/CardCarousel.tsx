@@ -11,6 +11,8 @@ import { AnimeCard } from "./Card";
 import { CardCarouselSkeleton } from "./CardCarouselLoad";
 import { AnimeCarouselProps } from "@/types";
 import { useFetchAnime } from "@/hooks/useCarouselAnime";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 export function AnimeCarousel({
   title,
@@ -27,9 +29,18 @@ export function AnimeCarousel({
 
   return (
     <div className="py-8 px-4 md:px-8">
-      <h2 className="text-xl md:text-2xl font-bold mb-4 border-l-4 pl-4 border-primary">
-        {title}
-      </h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl md:text-2xl font-bold border-l-4 pl-4 border-primary">
+          {title}
+        </h2>
+        <div className="flex w-fit gap-1 font-semibold hover:text-secondary hover:underline">
+          <Link className="flex" href={`/top/anime?filter=${filter}`}>
+            View More
+            <ChevronRight />
+          </Link>
+        </div>
+      </div>
+
       <Carousel
         opts={{
           align: "start",

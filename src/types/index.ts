@@ -147,6 +147,7 @@ export interface AnimeCardProps {
 
 export interface FooterProps {
   logo: {
+    url: string;
     src: string;
     alt: string;
     title: string;

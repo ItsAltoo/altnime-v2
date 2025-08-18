@@ -81,7 +81,7 @@ export function useSeasonAnime(year: number, season: string) {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", String(page));
     params.set("year", String(year));
-    router.replace(`?year=${year}&page=${page}`);
+    router.push(`?year=${year}&page=${page}`);
 
     return () => {
       isMounted = false;

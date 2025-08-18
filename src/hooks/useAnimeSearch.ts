@@ -1,7 +1,30 @@
-import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { Anime } from "@/types";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { jikan } from "@/services/api";
+import { Anime } from "@/types";
+
+export const useHandleSearch = () => {
+  const [query, setQuery] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!query.trim() || query.trim().length < 3) {
+      alert("Please enter at least 3 characters.");
+      return;
+    }
+
+    router.push(`/search?q=${query}`);
+    setQuery("");
+  };
+
+  return {
+    query,
+    setQuery,
+    handleSearch,
+  };
+};
 
 interface Data extends Anime {
   name: string;
@@ -10,19 +33,23 @@ interface Data extends Anime {
   status?: string;
 }
 
-export function useTopCategory(category: string, limit: number,filter: string) {
-  const [topAnimes, setTopAnimes] = useState<Data[]>([]);
+export const useAnimeSearch = ({ limit }: { limit: number }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [totalPages, setTotalPages] = useState(1);
-
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  const query = searchParams.get("q") || "";
+  const [totalPages, setTotalPages] = useState(1);
+  const [results, setResults] = useState<Data[]>([]);
 
   const pageParam = parseInt(searchParams.get("page") || "1", 10);
   const [page, setPage] = useState(pageParam);
 
   useEffect(() => {
+    if (!query?.trim()) {
+      return;
+    }
     let isMounted = true;
     setLoading(true);
     setError("");
@@ -31,15 +58,9 @@ export function useTopCategory(category: string, limit: number,filter: string) {
     const excludedGenres = [12, 49];
     const uniqueMap = new Map<number, Data>();
 
-    const fetchPage = (currentPage: number) => {
+    const fetchSearchResults = async (currentPage: number) => {
       jikan
-        .get(`/top/${category}`, {
-          params: {
-            limit,
-            filter,
-            page: currentPage,
-          },
-        })
+        .get(`/anime`, { params: { q: query, page: currentPage } })
         .then((res) => {
           const data = res.data;
 
@@ -69,10 +90,10 @@ export function useTopCategory(category: string, limit: number,filter: string) {
             uniqueMap.size < targetCount &&
             currentPage < data.pagination.last_visible_page
           ) {
-            fetchPage(currentPage + 1);
+            fetchSearchResults(currentPage + 1);
           } else {
             if (isMounted) {
-              setTopAnimes(Array.from(uniqueMap.values()));
+              setResults(Array.from(uniqueMap.values()));
               setLoading(false);
             }
           }
@@ -82,6 +103,11 @@ export function useTopCategory(category: string, limit: number,filter: string) {
             setError(err.message);
             setLoading(false);
           }
+        })
+        .finally(() => {
+          if (isMounted) {
+            setLoading(false);
+          }
         });
     };
 
@@ -89,12 +115,12 @@ export function useTopCategory(category: string, limit: number,filter: string) {
     params.set("page", String(page));
     router.replace(`?${params.toString()}`);
 
-    fetchPage(page);
+    fetchSearchResults(page);
 
     return () => {
       isMounted = false;
     };
-  }, [category, page]);
+  }, [query, page]);
 
-  return { topAnimes, loading, error, totalPages, page, setPage };
-}
+  return { results, loading, error, page, totalPages, setPage };
+};

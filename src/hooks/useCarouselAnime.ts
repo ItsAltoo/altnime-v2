@@ -61,14 +61,14 @@ export const useFetchAnime = (
         console.error("Failed to fetch anime in hook:", err);
 
         // Penanganan error yang lebih spesifik
-        let errorMessage = "Gagal memuat data anime. Silakan coba lagi nanti.";
+        let errorMessage = "Failed to load anime data. Please try again later.";
         if (err instanceof Error) {
           if (err.message.includes("429")) {
-            errorMessage = "Terlalu banyak permintaan. Menunggu sebentar...";
+            errorMessage = "Too many requests. Please wait a moment...";
           } else if (err.message.includes("timeout")) {
-            errorMessage = "Koneksi timeout. Periksa internet Anda.";
+            errorMessage = "Connection timed out. Please check your internet.";
           } else if (err.message.includes("Network Error")) {
-            errorMessage = "Masalah jaringan. Periksa koneksi internet Anda.";
+            errorMessage = "Network issue. Please check your internet connection.";
           }
         }
 
