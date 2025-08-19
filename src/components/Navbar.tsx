@@ -25,8 +25,6 @@ import { Icon } from "@iconify/react";
 import { clsx } from "clsx";
 import { useYearStore } from "@/lib/stores/useYearStore";
 import { getNavLinks } from "@/lib/data/navLinks";
-import { Input } from "./ui/input";
-import { Search } from "lucide-react";
 import SearchBar from "./SearchBar";
 
 function Navbar() {

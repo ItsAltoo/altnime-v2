@@ -1,22 +1,22 @@
-interface ImageTypes {
+export interface ImageTypes {
   image_url: string;
   small_image_url: string;
   large_image_url: string;
 }
 
-interface MalUrl {
+export interface MalUrl {
   mal_id: number;
   type: string;
   name: string;
   url: string;
 }
 
-interface Aired {
-  from: string | null;
-  to: string | null;
+export interface Aired {
+  from: string;
+  to: string;
   prop: {
-    from: { day: number | null; month: number | null; year: number | null };
-    to: { day: number | null; month: number | null; year: number | null };
+    from: { day: number; month: number; year: number };
+    to: { day: number; month: number; year: number };
   };
   string: string;
 }
@@ -50,40 +50,40 @@ export interface AnimeDetail {
 
   // --- Informasi Judul ---
   title: string;
-  title_english: string | null;
-  title_japanese: string | null;
+  title_english: string;
+  title_japanese: string;
   title_synonyms: string[];
 
   // --- Informasi Dasar ---
-  type: string | null;
-  source: string | null;
-  episodes: number | null;
+  type: string;
+  source: string;
+  episodes: number;
   status: string; // e.g., "Finished Airing", "Currently Airing"
   airing: boolean;
   aired: Aired;
   duration: string;
-  rating: string | null; // e.g., "PG-13 - Teens 13 or older"
+  rating: string; // e.g., "PG-13 - Teens 13 or older"
 
   // --- Skor dan Popularitas ---
-  score: number | null;
-  scored_by: number | null;
-  rank: number | null;
+  score: number;
+  scored_by: number;
+  rank: number;
   popularity: number;
   members: number;
   favorites: number;
 
   // --- Sinopsis dan Latar Belakang ---
-  synopsis: string | null;
-  background: string | null;
+  synopsis: string;
+  background: string;
 
   // --- Musim dan Penyiaran ---
-  season: string | null;
-  year: number | null;
+  season: string;
+  year: number;
   broadcast: {
-    day: string | null;
-    time: string | null;
-    timezone: string | null;
-    string: string | null;
+    day: string;
+    time: string;
+    timezone: string;
+    string: string;
   };
 
   // --- Relasi (Studio, Genre, dll.) ---
@@ -118,6 +118,7 @@ export interface AnimeDetail {
     url: string;
   }[];
 }
+
 
 // Props
 export interface AnimeCarouselProps {

@@ -51,11 +51,9 @@ const Hero = () => {
                 key={anime.mal_id}
                 className="relative h-screen items-center justify-center flex overflow-hidden"
               >
-                {/* 2. Tambahkan gambar sebagai background */}
                 <Image
                   src={anime.images.webp.large_image_url}
                   alt={`${anime.title} background`}
-                  
                   fill
                   className="object-cover -z-10 blur-xs brightness-[0.2] opacity-75"
                   priority={topAnimes.indexOf(anime) === 0}
@@ -91,12 +89,11 @@ const Hero = () => {
                       </Button>
                     </div>
                   </div>
-                  {/* Gunakan Next/Image untuk performa lebih baik */}
                   <Image
                     src={anime.images.jpg.image_url}
                     alt={anime.title}
-                    width={288} // setara w-72
-                    height={432} // setara h-auto dengan rasio umum
+                    width={288}
+                    height={432} 
                     className="max-h-[65vh] w-auto rounded-md object-cover"
                     priority={topAnimes.indexOf(anime) === 0} // Prioritaskan gambar pertama
                   />
@@ -104,8 +101,8 @@ const Hero = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 hidden md:flex " />
-          <CarouselNext className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 hidden md:flex" />
+          <CarouselPrevious className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 hidden md:flex cursor-pointer" />
+          <CarouselNext className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 hidden md:flex cursor-pointer" />
         </Carousel>
       </div>
     </section>

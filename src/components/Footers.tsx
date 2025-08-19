@@ -1,25 +1,8 @@
 import { FooterProps } from "@/types";
 import Image from "next/image";
 import React from "react";
-import { FaInstagram, FaGlobe, FaGithub } from "react-icons/fa";
 
-const defaultSocialLinks = [
-  {
-    icon: <FaInstagram className="size-5" />,
-    href: "https://www.instagram.com/malik_qit/",
-    label: "Instagram",
-  },
-  {
-    icon: <FaGithub className="size-5" />,
-    href: "https://github.com/ItsAltoo",
-    label: "Github",
-  },
-  {
-    icon: <FaGlobe className="size-5" />,
-    href: "https://www.itsmalik.tech",
-    label: "Website",
-  },
-];
+const defaultSocialLinks = [];
 
 const defaultLegalLinks = [
   { name: "Terms of Use", href: "#" },
@@ -28,13 +11,13 @@ const defaultLegalLinks = [
 
 const items: FooterProps = {
   logo: {
-    url: "https://www.itsmalik.tech",
+    url: "#",
     src: "/Monica.jpeg",
     alt: "logo",
     title: "ItsAlto",
   },
   description:"Anime and manga data is provided by MyAnimeList via the Jikan API. This project is not affiliated with MyAnimeList.net.",
-  socialLinks: defaultSocialLinks,
+  // socialLinks: defaultSocialLinks,
   copyright: "© 2025 AltNime. All rights reserved.",
   legalLinks: defaultLegalLinks,
 };
