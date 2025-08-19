@@ -16,7 +16,6 @@ interface HeadingProps {
   aired: Aired;
 }
 
-
 const Heading: React.FC<HeadingProps> = ({
   title,
   poster,
@@ -71,7 +70,12 @@ const Heading: React.FC<HeadingProps> = ({
             <h1 className="text-5xl font-bold">{title}</h1>
 
             <div className="flex flex-col gap-1">
-              <p className="tracking-wide text-md">{aired.prop.from.year} - {aired.prop.to.year || "Ongoing"}</p>
+              <p className="tracking-wide text-md">
+                {aired.prop.from.year} -{" "}
+                {aired.prop.to.year === aired.prop.from.year
+                  ? "Ongoing"
+                  : aired.prop.to.year}
+              </p>
               <p className="tracking-wide text-md">Episodes: {episodes}</p>
               <p className="tracking-wide text-md">Type: {type}</p>
 
