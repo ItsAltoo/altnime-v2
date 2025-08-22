@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import { AnimeCard } from "@/components/Card";
 import { PaginationComponent } from "@/components/Pagination";
 import Grid from "../Seasons/Grid";
@@ -25,23 +25,25 @@ export const AnimeList = ({ limit }: { limit: number }) => {
 
   return (
     <>
-      <Grid>
-        {topAnimes.map((anime) => (
-          <AnimeCard
-            status={anime.status}
-            key={anime.mal_id}
-            title={anime.title}
-            name={anime.name}
-            imageUrl={anime.images.jpg.image_url}
-            score={anime.score}
-            episodes={anime.episodes}
-            chapters={anime.chapters}
-            type={anime.type}
-            mal_id={anime.mal_id}
-            category={`${category}`}
-          />
-        ))}
-      </Grid>
+      <Suspense >
+        <Grid>
+          {topAnimes.map((anime) => (
+            <AnimeCard
+              status={anime.status}
+              key={anime.mal_id}
+              title={anime.title}
+              name={anime.name}
+              imageUrl={anime.images.jpg.image_url}
+              score={anime.score}
+              episodes={anime.episodes}
+              chapters={anime.chapters}
+              type={anime.type}
+              mal_id={anime.mal_id}
+              category={`${category}`}
+            />
+          ))}
+        </Grid>
+      </Suspense>
 
       <div className="mt-6 flex justify-center">
         <PaginationComponent
