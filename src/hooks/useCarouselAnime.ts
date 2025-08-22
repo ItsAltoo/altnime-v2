@@ -35,7 +35,7 @@ export const useFetchAnime = (
 
       // 2. Cek cache terlebih dahulu
       if (animeCache.has(cacheKey)) {
-        setAnimes(animeCache.get(cacheKey)!);
+        setAnimes(animeCache.get(cacheKey)! as Anime[]);
         setLoading(false);
         return;
       }

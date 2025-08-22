@@ -1,5 +1,5 @@
 import { animeCache, axiosInstance } from "@/services/api";
-import { AnimeDetail } from "@/types";
+import {  AnimeDetail } from "@/types";
 import { CancelToken } from "axios";
 
 /**
