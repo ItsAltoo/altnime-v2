@@ -55,8 +55,7 @@ const createAxiosInstance = (): AxiosInstance => {
 };
 
 export const axiosInstance = createAxiosInstance();
-export const animeCache = new Map<string, any>();
-const etagCache = new Map<string, string>();
+export const animeCache = new Map<string, Anime[]>();
 const excludedGenres = [12, 49];
 
 export const fetchAnimeData = async (

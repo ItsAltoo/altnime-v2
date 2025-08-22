@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AnimeCard } from "@/components/Card";
 import { PaginationComponent } from "@/components/Pagination";
 import Grid from "../Seasons/Grid";
