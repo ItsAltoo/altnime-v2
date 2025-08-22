@@ -33,7 +33,7 @@ export const SeasonsView = ({
       setSelectedYear(yearNum);
       setYearGlobal(yearNum);
     }
-  }, [searchParams]);
+  }, [searchParams, setYearGlobal]);
 
   const handleChangeYear = (year: number) => {
     setSelectedYear(year);
