@@ -23,10 +23,9 @@ export const AnimeList = ({ limit }: { limit: number }) => {
     <>
       <Grid>
         {results.map((anime) => (
-          <Suspense>
+          <Suspense key={anime.mal_id}>
             <AnimeCard
               status={anime.status}
-              key={anime.mal_id}
               title={anime.title}
               name={anime.name}
               imageUrl={anime.images.jpg.image_url}
