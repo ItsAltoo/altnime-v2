@@ -21,12 +21,15 @@ const DetailView = () => {
       <section className="md:p-12 px-6 ">
         <Heading
           title={data.title}
+          name={data.name}
+          chapters={data.chapters}
           poster={data.images.jpg.image_url}
           background={data.images.jpg.large_image_url}
           genres={data.genres}
-          episodes={data.episodes || "N/A"}
+          episodes={data.episodes}
           type={data.type}
           aired={data.aired}
+          published={data.published}
           info={{
             status: data.status,
             members: data.members,
@@ -46,15 +49,14 @@ const DetailView = () => {
             duration: data.duration,
             source: data.source,
             titles: data.titles?.map((title) => title.title),
+            about: data.about,
           }}
-
           trailer={{
             url: data.trailer?.embed_url,
             images: {
               image_url: data.trailer?.images?.large_image_url,
             },
           }}
-          
         />
       </section>
     </>

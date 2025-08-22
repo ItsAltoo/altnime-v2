@@ -54,7 +54,7 @@ export const useFetchAnime = (
         }
       } catch (err) {
         if (axios.isCancel(err)) {
-          console.log("Request canceled:", err.message);
+          setError("Request canceled");
           return;
         }
 

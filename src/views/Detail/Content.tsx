@@ -17,6 +17,7 @@ interface ContentProps {
     duration: string;
     source: string;
     titles: string[];
+    about?: string;
   };
 }
 
@@ -42,6 +43,18 @@ const Content: React.FC<ContentProps> = ({
           {background || "-"}
         </p>
 
+        {info.about && (
+          <>
+            <h1 className="text-lg font-semibold underline-offset-2 underline mb-3 mt-6">
+              About
+            </h1>
+            <p className="overflow-y-scroll max-h-52 md:max-h-28 md:overflow-auto ">
+              {info.about || "-"}
+            </p>
+          </>
+        )}
+
+        {/* Additional Info Section */}
         <div>
           <h1 className="text-lg font-semibold underline-offset-2 underline mb-3 mt-6">
             Additional Info

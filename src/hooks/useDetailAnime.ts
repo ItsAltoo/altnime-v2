@@ -1,11 +1,18 @@
 import { jikan } from "@/services/api";
-import { AnimeDetail } from "@/types";
+import { Aired, AnimeDetail } from "@/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+interface UseDetailAnime extends AnimeDetail {
+  about: string;
+  chapters: number;
+  published: Aired;
+  name: string;
+}
+
 export const useDetailAnime = () => {
   const params = useParams();
-  const [data, setData] = useState<AnimeDetail | null>(null);
+  const [data, setData] = useState<UseDetailAnime | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -17,8 +24,6 @@ export const useDetailAnime = () => {
       .then((res) => {
         const detail = res.data.data;
         setData(detail);
-        console.log(detail);
-        
         setLoading(false);
       })
       .catch((err) => {

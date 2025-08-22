@@ -179,12 +179,15 @@ export interface FooterProps {
 
 export interface HeadingDetailProps {
   title: string;
+  name: string;
   poster: string;
   background: string;
   genres: MalUrl[];
-  episodes: number | string;
+  episodes: number ;
+  chapters: number;
   type: string;
   aired: Aired;
+  published: Aired;
   info: {
     status: string;
     members: number;
