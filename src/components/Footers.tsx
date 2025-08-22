@@ -36,6 +36,7 @@ const Footer = () => {
                 className="w-12 h-12 rounded-full object-cover"
                 height={52}
                 width={52}
+                priority={false}
               />
               <h2 className="text-xl font-semibold">{items.logo.title}</h2>
             </div>

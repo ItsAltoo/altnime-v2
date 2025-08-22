@@ -1,9 +1,17 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import { Analytics } from "@vercel/analytics/next";
-import { Footer } from "@/components/Footers";
-import { PageLoad } from "@/components/PageLoad";
+// src/app/layout.tsx
+import type { Metadata } from "next"
+import "./globals.css"
+import { Poppins } from "next/font/google"
+import Navbar from "@/components/Navbar"
+import { Analytics } from "@vercel/analytics/next"
+import { Footer } from "@/components/Footers"
+import { PageLoad } from "@/components/PageLoad"
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -11,16 +19,16 @@ export const metadata: Metadata = {
   icons: {
     icon: "/Monica.jpeg",
   },
-};
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en">
-      <body className={`antialiased`}>
+    <html lang="en" className={poppins.className}>
+      <body className="antialiased">
         <Navbar />
         <PageLoad />
         {children}
@@ -28,5 +36,5 @@ export default function RootLayout({
         <Analytics />
       </body>
     </html>
-  );
+  )
 }

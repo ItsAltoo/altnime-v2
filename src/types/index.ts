@@ -53,6 +53,7 @@ export interface AnimeDetail {
   title_english: string;
   title_japanese: string;
   title_synonyms: string[];
+  titles: { type: string; title: string }[];
 
   // --- Informasi Dasar ---
   type: string;
@@ -113,6 +114,16 @@ export interface AnimeDetail {
     url: string;
   }[];
 
+  trailer: {
+    embed_url: string;
+    url: string;
+    images:{
+      image_url: string;
+      small_image_url: string;
+      large_image_url: string;
+    }
+  };
+
   streaming: {
     name: string;
     url: string;
@@ -164,4 +175,21 @@ export interface FooterProps {
     name: string;
     href: string;
   }>;
+}
+
+export interface HeadingDetailProps {
+  title: string;
+  poster: string;
+  background: string;
+  genres: MalUrl[];
+  episodes: number | string;
+  type: string;
+  aired: Aired;
+  info: {
+    status: string;
+    members: number;
+    score: number;
+    rank: number;
+    favorites: number;
+  };
 }

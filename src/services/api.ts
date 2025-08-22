@@ -7,7 +7,7 @@ import axios, {
 import { Anime } from "@/types";
 
 export const jikan = axios.create({
-  baseURL: "https://api.jikan.moe/v4",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 15000,
 });
 
