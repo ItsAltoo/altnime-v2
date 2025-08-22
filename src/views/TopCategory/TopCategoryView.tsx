@@ -25,9 +25,9 @@ export const AnimeList = ({ limit }: { limit: number }) => {
 
   return (
     <>
-      <Suspense >
-        <Grid>
-          {topAnimes.map((anime) => (
+      <Grid>
+        {topAnimes.map((anime) => (
+          <Suspense>
             <AnimeCard
               status={anime.status}
               key={anime.mal_id}
@@ -41,9 +41,9 @@ export const AnimeList = ({ limit }: { limit: number }) => {
               mal_id={anime.mal_id}
               category={`${category}`}
             />
-          ))}
-        </Grid>
-      </Suspense>
+          </Suspense>
+        ))}
+      </Grid>
 
       <div className="mt-6 flex justify-center">
         <PaginationComponent

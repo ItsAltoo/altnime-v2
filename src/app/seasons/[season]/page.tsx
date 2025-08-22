@@ -1,5 +1,5 @@
 import { SeasonsView } from "@/views/Seasons/SeasonsView";
-import React from "react";
+import React, { Suspense } from "react";
 
 const page = async ({ params }: { params: Promise<{ season: string }> }) => {
   const currentYear = new Date().getFullYear();
@@ -7,7 +7,9 @@ const page = async ({ params }: { params: Promise<{ season: string }> }) => {
   const { season } = await params;
 
   return (
-    <SeasonsView years={years} season={season} currentYear={currentYear} />
+    <Suspense>
+      <SeasonsView years={years} season={season} currentYear={currentYear} />
+    </Suspense>
   );
 };
 

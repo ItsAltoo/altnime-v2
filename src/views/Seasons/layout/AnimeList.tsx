@@ -28,9 +28,9 @@ export const AnimeList = ({
 
   return (
     <>
-      <Suspense>
-        <Grid>
-          {animes.map((anime) => (
+      <Grid>
+        {animes.map((anime) => (
+          <Suspense>
             <AnimeCard
               key={anime.mal_id}
               title={anime.title}
@@ -40,9 +40,9 @@ export const AnimeList = ({
               type={anime.type}
               mal_id={anime.mal_id}
             />
-          ))}
-        </Grid>
-      </Suspense>
+          </Suspense>
+        ))}
+      </Grid>
 
       <div className="mt-6 flex justify-center">
         <PaginationComponent
