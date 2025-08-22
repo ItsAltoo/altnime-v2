@@ -14,7 +14,7 @@ export const fetchAnimeById = async (
 ): Promise<AnimeDetail> => {
   const cacheKey = `anime-detail-${id}`;
   if (animeCache.has(cacheKey)) {
-    return animeCache.get(cacheKey)!;
+    return animeCache.get(cacheKey)! as AnimeDetail;
   }
 
   try {

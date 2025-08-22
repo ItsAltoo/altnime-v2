@@ -4,7 +4,7 @@ import axios, {
   AxiosError,
   CancelToken,
 } from "axios";
-import { Anime } from "@/types";
+import { Anime, AnimeDetail } from "@/types";
 
 export const jikan = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -55,7 +55,7 @@ const createAxiosInstance = (): AxiosInstance => {
 };
 
 export const axiosInstance = createAxiosInstance();
-export const animeCache = new Map<string, Anime[]>();
+export const animeCache = new Map<string, Anime[] | AnimeDetail>();
 const excludedGenres = [12, 49];
 
 export const fetchAnimeData = async (
@@ -65,7 +65,7 @@ export const fetchAnimeData = async (
 ): Promise<Anime[]> => {
   const cacheKey = `${filter}-${limit}`;
   if (animeCache.has(cacheKey)) {
-    return animeCache.get(cacheKey)!;
+    return animeCache.get(cacheKey) as Anime[];
   }
   const uniqueMap = new Map<number, Anime>();
   let page = 1;
