@@ -27,6 +27,7 @@ import { useYearStore } from "@/lib/stores/useYearStore";
 import { getNavLinks } from "@/lib/data/navLinks";
 import SearchBar from "./SearchBar";
 import { PageLoad } from "./PageLoad";
+import AuthIcon from "./AuthIcon";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -37,7 +38,7 @@ function Navbar() {
   return (
     <>
       <header className="sticky inset-x-0 top-0 z-50 h-14 border-b bg-black/60 backdrop-blur-md">
-        <nav className="flex h-full items-center justify-between px-4 sm:px-5">
+        <nav className="flex h-full items-center justify-between px-3">
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <h1 className="text-2xl font-bold tracking-wide bg-gradient-to-br from-primary via-[#0065F8] to-[#00CAFF] text-transparent bg-clip-text">
@@ -96,6 +97,8 @@ function Navbar() {
                 <SearchBar />
               </div>
             </div>
+
+            <AuthIcon />
           </div>
 
           {/* ------- Mobile Menu ------- */}

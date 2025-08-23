@@ -5,6 +5,7 @@ import { Poppins } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import { Analytics } from "@vercel/analytics/next";
 import { Footer } from "@/components/Footers";
+import NextAuthProvider from "@/providers/SessionProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -28,9 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.className}>
       <body className="antialiased">
-        <Navbar />
-
-        {children}
+        <NextAuthProvider>
+          <Navbar />
+          {children}
+        </NextAuthProvider>
         <Footer />
         <Analytics />
       </body>
