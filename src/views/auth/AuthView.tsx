@@ -1,6 +1,7 @@
 "use client"
 import { LoginForm } from "@/components/login-form";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -21,10 +22,12 @@ const AuthView = () => {
         </div>
       </div>
       <div className="bg-muted relative hidden lg:block">
-        <img
-          src="/placeholder.svg"
+        <Image
+          src="/bg_login.png"
           alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2]"
+          fill
+          priority
         />
       </div>
     </div>

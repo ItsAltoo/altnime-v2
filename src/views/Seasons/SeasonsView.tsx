@@ -11,15 +11,10 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useYearStore } from "@/lib/stores/useYearStore";
 
-export const SeasonsView = ({
-  years,
-  season,
-  currentYear,
-}: {
-  years: number[];
-  season: string;
-  currentYear: number;
-}) => {
+export const SeasonsView = ({ season }: { season: string }) => {
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 13 }, (_, i) => currentYear + 2 - i);
+
   const searchParams = useSearchParams();
   const storeYear = useYearStore((state) => state.selectedYear);
   const setYearGlobal = useYearStore((state) => state.setYear);
