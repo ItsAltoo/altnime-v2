@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 
 const handler = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -15,10 +15,12 @@ const handler = NextAuth({
 
     CredentialsProvider({
       name: "Credentials",
+
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
         const user = await prisma.user.findUnique({
           where: { email: credentials?.email },
@@ -30,19 +32,22 @@ const handler = NextAuth({
           credentials!.password,
           user.password
         );
+
         if (!isValid) throw new Error("Invalid credentials");
 
-        return { id: user.id, email: user.email, name: user.name };
+        return { id: user.id, email: user.email };
       },
     }),
   ],
+
   secret: process.env.NEXTAUTH_SECRET,
   session: {
-    strategy: "database", // pakai DB
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
   },
   pages: {
-    signIn: "/login", // custom page
+    signIn: "/login", 
   },
 });
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST,handler as auth };

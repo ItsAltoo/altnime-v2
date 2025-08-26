@@ -27,7 +27,7 @@ import { useYearStore } from "@/lib/stores/useYearStore";
 import { getNavLinks } from "@/lib/data/navLinks";
 import SearchBar from "./SearchBar";
 import { PageLoad } from "./PageLoad";
-import AuthIcon from "./AuthIcon";
+import AuthIcon from "./auth/AuthIcon";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
