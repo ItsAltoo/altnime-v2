@@ -1,13 +1,7 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState, FormEvent } from "react";
@@ -15,22 +9,31 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { Loader2Icon } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { toast } from "sonner";
 
-
-export function SignUpForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function SignUpForm() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  async function handleSignup(e: FormEvent<HTMLFormElement>) {
+  const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      toast.warning("Passwords do not match");
       setLoading(false);
       return;
     }
@@ -39,86 +42,125 @@ export function SignUpForm({
 
     axios
       .post("/api/auth/signup", {
+        name,
         email,
         password,
       })
       .then((res) => {
+        if (res.status !== 201) {
+          toast.error("Failed to sign up");
+        }
+        setLoading(false);
+        setOpen(false);
         signIn("credentials", {
+          name,
           email,
           password,
           redirect: true,
           callbackUrl: "/",
         });
-        setLoading(false);
+        toast.success(`${name} created successfully`);
       })
       .catch((error) => {
-        alert(error.response?.data?.error || "An error occurred");
+        toast.error(error.response?.data?.error || "An error occurred", {});
         setLoading(false);
       });
-  }
+  };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardHeader>
-          <CardTitle>Sign up for your account</CardTitle>
-          <CardDescription>
-            Enter your email below to create a new account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSignup}>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                </div>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-                <div className="flex items-center">
-                  <Label htmlFor="confirm-password">Confirm Password</Label>
-                </div>
-                <Input
-                  id="confirm-password"
-                  type="password"
-                  placeholder="Confirm your password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? <Loader2Icon className="animate-spin" /> : "Sign up"}
-                </Button>
-              </div>
-              <div>
-                <p className="text-center">
-                  Already have an account? {" "}
-                  <Button variant={"link"} className="p-0 text-foreground">
-                    <Link href={`/login`}>Sign In</Link>
-                  </Button>
-                </p>
-              </div>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button
+          variant={"link"}
+          className="underline underline-offset-4 p-0 text-foreground cursor-pointer"
+        >
+          Sign up
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Sign up for your account</DialogTitle>
+          <DialogDescription>
+            Enter your email below to create a new account.
+          </DialogDescription>
+        </DialogHeader>
+
+        <form onSubmit={handleSignup}>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-rows items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Name
+              </Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Nickname"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="col-span-3"
+                required
+              />
             </div>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+            <div className="grid grid-rows items-center gap-4">
+              <Label htmlFor="email" className="text-right">
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="col-span-3"
+                required
+              />
+            </div>
+            <div className="grid grid-rows items-center gap-4">
+              <Label htmlFor="password" className="text-right">
+                Password
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="col-span-3"
+                required
+              />
+            </div>
+            <div className="grid grid-rows items-center gap-4">
+              <Label htmlFor="confirm-password" className="text-right">
+                Confirm
+              </Label>
+              <Input
+                id="confirm-password"
+                type="password"
+                placeholder="********"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="col-span-3"
+                required
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? <Loader2Icon className="animate-spin" /> : "Sign up"}
+            </Button>
+          </DialogFooter>
+        </form>
+        <div className="text-center text-sm">
+          Already have an account?{" "}
+          <Button
+            variant={"link"}
+            className="p-0 h-auto cursor-pointer text-foreground"
+            onClick={() => setOpen(false)}
+          >
+            Sign In
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 import React, { Suspense } from "react";
-import { AnimeCard } from "@/components/Card";
+import { AnimeCard } from "@/components/Card/Card";
 import { PaginationComponent } from "@/components/Pagination";
 import Grid from "../Seasons/Grid";
 import { useAnimeSearch } from "@/hooks/useAnimeSearch";

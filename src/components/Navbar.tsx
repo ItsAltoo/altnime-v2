@@ -28,6 +28,7 @@ import { getNavLinks } from "@/lib/data/navLinks";
 import SearchBar from "./SearchBar";
 import { PageLoad } from "./PageLoad";
 import AuthIcon from "./auth/AuthIcon";
+import { MenuIcon } from "lucide-react";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -98,20 +99,16 @@ function Navbar() {
               </div>
             </div>
 
-            <AuthIcon />
+            <AuthIcon className="hidden md:block" />
           </div>
 
           {/* ------- Mobile Menu ------- */}
-          <div className="md:hidden">
+          <div className="md:hidden flex justify-center items-center gap-2">
+            <AuthIcon className="md:hidden" />
+
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="sm" aria-label="Open menu">
-                  <Icon
-                    icon="ic:round-menu"
-                    width={50}
-                    className="hover:text-primary active:text-primary"
-                  />
-                </Button>
+                <MenuIcon className="hover:text-primary active:text-primary size-7" />
               </SheetTrigger>
 
               <SheetContent

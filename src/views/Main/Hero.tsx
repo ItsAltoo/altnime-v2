@@ -90,11 +90,11 @@ const Hero = () => {
                     </div>
                   </div>
                   <Image
-                    src={anime.images.jpg.image_url}
+                    src={anime.images.jpg.large_image_url}
                     alt={anime.title}
                     width={288}
                     height={432} 
-                    className="max-h-[65vh] w-auto rounded-md object-cover"
+                    className="max-h-80 w-auto rounded-md object-cover"
                     priority={topAnimes.indexOf(anime) === 0} // Prioritaskan gambar pertama
                   />
                 </div>

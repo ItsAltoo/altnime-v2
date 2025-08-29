@@ -1,11 +1,12 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
+import { NextResponse } from "next/dist/server/web/spec-extension/response";
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
@@ -22,20 +23,34 @@ const handler = NextAuth({
       },
 
       async authorize(credentials) {
-        const user = await prisma.user.findUnique({
-          where: { email: credentials?.email },
+        const user = await prisma.user.findFirst({
+          where: {
+            email: credentials?.email as string,
+          },
         });
 
-        if (!user || !user.password) throw new Error("User not found");
+        if (!user || !user.password) {
+          NextResponse.json(
+            { error: "User not found" },
+            { status: 404 }
+          );
+          return null;
+        }
 
         const isValid = await bcrypt.compare(
           credentials!.password,
           user.password
         );
 
-        if (!isValid) throw new Error("Invalid credentials");
+        if (!isValid) {
+          NextResponse.json(
+            { error: "Invalid credentials" },
+            { status: 401 }
+          );
+          return null;
+        }
 
-        return { id: user.id, email: user.email };
+        return { id: user.id, email: user.email, name: user.name };
       },
     }),
   ],
@@ -46,8 +61,10 @@ const handler = NextAuth({
     maxAge: 30 * 24 * 60 * 60,
   },
   pages: {
-    signIn: "/login", 
+    signIn: "/login",
   },
-});
+};
 
-export { handler as GET, handler as POST,handler as auth };
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };

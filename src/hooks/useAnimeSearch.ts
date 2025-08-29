@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { jikan } from "@/services/api";
 import { Anime } from "@/types";
+import { toast } from "sonner";
 
 export const useHandleSearch = () => {
   const [query, setQuery] = useState("");
@@ -11,7 +12,7 @@ export const useHandleSearch = () => {
     e.preventDefault();
 
     if (!query.trim() || query.trim().length < 3) {
-      alert("Please enter at least 3 characters.");
+      toast.warning("Please enter at least 3 characters.");
       return;
     }
 

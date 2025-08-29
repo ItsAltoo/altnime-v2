@@ -20,6 +20,7 @@ const DetailView = () => {
     <>
       <section className="md:p-12 px-6 ">
         <Heading
+          mal_id={data.mal_id}
           title={data.title}
           name={data.name}
           chapters={data.chapters}

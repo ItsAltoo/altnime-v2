@@ -41,16 +41,28 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
-  email         String   @unique
+  name          String
+  email         String   
   password      String?
   emailVerified DateTime? @map("email_verified")
   image         String?
   accounts      Account[]
   sessions      Session[]
   passwordResetTokens PasswordResetToken[]
+  libraries     Library[]
 
   @@map("users")
+  @@unique([email,name])
+}
+
+model Library {
+  id      String   @id @default(cuid())
+  animeId Int
+  userId  String
+  userEmail String?
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("libraries")
 }
 
 model VerificationToken {

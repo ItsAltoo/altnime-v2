@@ -1,3 +1,5 @@
+"use client";
+import BookmarkButton from "@/components/BookmarkButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { HeadingDetailProps } from "@/types";
@@ -15,6 +17,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const Heading: React.FC<HeadingDetailProps> = ({
+  mal_id,
   title,
   name,
   poster,
@@ -31,7 +34,6 @@ const Heading: React.FC<HeadingDetailProps> = ({
 
   return (
     <>
-      {/* BACKGROUND IMAGE: Menggunakan 'fill' lebih baik untuk gambar latar */}
       <div className="absolute inset-0 h-60 md:h-72 -z-10">
         {background && (
           <Image
@@ -51,7 +53,13 @@ const Heading: React.FC<HeadingDetailProps> = ({
           <Button
             size="circle"
             className="cursor-pointer"
-            onClick={() => router.back()}
+            onClick={() => {
+              if (window.history.length > 1) {
+                router.back();
+              } else {
+                router.push("/");
+              }
+            }}
           >
             <ArrowLeft className="size-5" />
           </Button>
@@ -64,9 +72,7 @@ const Heading: React.FC<HeadingDetailProps> = ({
           </Button>
         </div>
 
-        {/* LAYOUT UTAMA: Stacked di mobile, side-by-side di desktop */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-8">
-          {/* POSTER IMAGE: Ukuran disesuaikan untuk mobile dan desktop */}
           <Image
             src={poster}
             alt={title || name}
@@ -128,10 +134,7 @@ const Heading: React.FC<HeadingDetailProps> = ({
 
               {/* AKSI & STATS: Stacked di mobile, side-by-side di desktop */}
               <div className="flex flex-col md:flex-row items-center md:items-end justify-between mt-5 gap-4">
-                <Button className="w-fit cursor-pointer">
-                  <Book className="mr-2" />
-                  Bookmark
-                </Button>
+                <BookmarkButton animeId={mal_id} />
 
                 {/* STATS: Dibuat wrap dan justify center di mobile */}
                 <div className="gap-2 flex flex-wrap justify-center">

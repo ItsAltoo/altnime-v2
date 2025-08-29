@@ -178,6 +178,7 @@ export interface FooterProps {
 }
 
 export interface HeadingDetailProps {
+  mal_id: number;
   title: string;
   name: string;
   poster: string;

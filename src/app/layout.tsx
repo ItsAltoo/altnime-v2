@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins } from "next/font/google";
@@ -6,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import { Analytics } from "@vercel/analytics/next";
 import { Footer } from "@/components/Footers";
 import NextAuthProvider from "@/providers/SessionProvider";
+import { Toaster } from "@/components/ui/sonner";
+
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
           <Navbar />
           {children}
         </NextAuthProvider>
+        <Toaster position="bottom-right"/>
         <Footer />
         <Analytics />
       </body>

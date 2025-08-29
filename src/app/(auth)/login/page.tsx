@@ -1,7 +1,6 @@
-import AuthView from "@/views/auth/AuthView";
+import AuthView from "@/views/auth/SignInView";
 
 export default function LoginPage() {
-  
   return (
     <div>
       <AuthView />
