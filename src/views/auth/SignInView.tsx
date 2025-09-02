@@ -23,10 +23,11 @@ const AuthView = () => {
       </div>
       <div className="bg-muted relative hidden lg:block">
         <Image
-          src="/bg_login.png"
+          src="/bg_login.webp"
           alt="Image"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2]"
           fill
+          sizes="(min-width: 640px) 50vw, 100vw"
           priority
         />
       </div>

@@ -24,8 +24,8 @@ const DetailView = () => {
           title={data.title}
           name={data.name}
           chapters={data.chapters}
-          poster={data.images.jpg.image_url}
-          background={data.images.jpg.large_image_url}
+          poster={data.images.webp.image_url}
+          background={data.images.webp.large_image_url}
           genres={data.genres}
           episodes={data.episodes}
           type={data.type}

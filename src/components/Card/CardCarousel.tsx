@@ -56,8 +56,9 @@ export function AnimeCarousel({
                 className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/6"
               >
                 <AnimeCard
+                  status={anime.status}
                   title={anime.title}
-                  imageUrl={anime.images.jpg.image_url}
+                  imageUrl={anime.images.webp.image_url}
                   score={anime.score}
                   episodes={anime.episodes}
                   type={anime.type}

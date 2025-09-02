@@ -1,26 +1,26 @@
 import { useState, useEffect } from "react";
 import axios, { CancelTokenSource } from "axios";
 import { fetchAnimeData, animeCache } from "@/services/api";
-import { Anime } from "@/types";
+import { Anime, AnimeCardProps } from "@/types";
 
 interface UseFetchAnimeResult {
-  animes: Anime[];
+  animes: Data[];
   loading: boolean;
   error: string | null;
 }
 
-/**
- * Custom hook untuk mengambil daftar anime dari API Jikan.
- * Mengelola state loading, error, dan data, serta caching.
- * @param {string} filter - Filter untuk API (e.g., 'airing').
- * @param {number} limit - Jumlah maksimum anime yang ingin diambil.
- * @returns {UseFetchAnimeResult} Objek yang berisi animes, loading, dan error.
- */
+interface Data extends Anime {
+  name: string;
+  chapters?: number;
+  volumes?: number;
+  status?: string;
+}
+
 export const useFetchAnime = (
   filter: string,
   limit: number
 ): UseFetchAnimeResult => {
-  const [animes, setAnimes] = useState<Anime[]>([]);
+  const [animes, setAnimes] = useState<Data[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,7 +35,7 @@ export const useFetchAnime = (
 
       // 2. Cek cache terlebih dahulu
       if (animeCache.has(cacheKey)) {
-        setAnimes(animeCache.get(cacheKey)! as Anime[]);
+        setAnimes(animeCache.get(cacheKey)! as Data[]);
         setLoading(false);
         return;
       }
@@ -50,7 +50,7 @@ export const useFetchAnime = (
 
         // Pastikan komponen masih mounted sebelum update state
         if (!cancelTokenSource.token.reason) {
-          setAnimes(result);
+          setAnimes(result as Data[]);
         }
       } catch (err) {
         if (axios.isCancel(err)) {

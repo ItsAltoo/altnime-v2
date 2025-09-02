@@ -6,7 +6,11 @@ import LibraryContent from "./LibraryContent";
 
 const LibraryView = () => {
   const { data: session } = useSession();
-  return <>{session?.user ? <LibraryContent /> : <LibrarySignIn />}</>;
+  return (
+    <div className="p-4">
+      {session?.user ? <LibraryContent /> : <LibrarySignIn />}
+    </div>
+  );
 };
 
 export default LibraryView;

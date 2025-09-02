@@ -55,16 +55,6 @@ model User {
   @@unique([email,name])
 }
 
-model Library {
-  id      String   @id @default(cuid())
-  animeId Int
-  userId  String
-  userEmail String?
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("libraries")
-}
-
 model VerificationToken {
   identifier String
   token      String
@@ -82,3 +72,30 @@ model PasswordResetToken {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model Library {
+  id        String   @id @default(cuid())
+  userId    String
+  userEmail String?
+  cards     CardLibrary[]
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("libraries")
+}
+
+model CardLibrary {
+  id        String   @id @default(cuid())
+  animeId   Int
+  imageUrl  String
+  title     String?
+  name      String?
+  status    String?
+  type      String?
+  score     String?
+  episodes  Int?
+  chapters  Int?
+
+  libraryId String
+  library   Library  @relation(fields: [libraryId], references: [id], onDelete: Cascade)
+
+  @@map("card_libraries")
+}

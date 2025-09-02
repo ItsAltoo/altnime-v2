@@ -40,9 +40,9 @@ const Heading: React.FC<HeadingDetailProps> = ({
             src={background}
             alt={title}
             fill
+            sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw"
             className="object-cover w-full h-full blur-sm brightness-50"
             priority
-            quality={75}
           />
         )}
       </div>
@@ -134,7 +134,17 @@ const Heading: React.FC<HeadingDetailProps> = ({
 
               {/* AKSI & STATS: Stacked di mobile, side-by-side di desktop */}
               <div className="flex flex-col md:flex-row items-center md:items-end justify-between mt-5 gap-4">
-                <BookmarkButton animeId={mal_id} />
+                <BookmarkButton
+                  animeId={mal_id}
+                  imageUrl={poster}
+                  title={title}
+                  name={name}
+                  status={info.status}
+                  type={type}
+                  score={`${info.score}`}
+                  episodes={episodes}
+                  chapters={chapters}
+                />
 
                 {/* STATS: Dibuat wrap dan justify center di mobile */}
                 <div className="gap-2 flex flex-wrap justify-center">

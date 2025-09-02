@@ -33,7 +33,7 @@ export const AnimeList = ({
           <Suspense key={anime.mal_id}>
             <AnimeCard
               title={anime.title}
-              imageUrl={anime.images.jpg.image_url}
+              imageUrl={anime.images.webp.image_url}
               score={anime.score}
               episodes={anime.episodes}
               type={anime.type}

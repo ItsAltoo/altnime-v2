@@ -64,11 +64,14 @@ export const fetchAnimeData = async (
   cancelToken: CancelToken
 ): Promise<Anime[]> => {
   const cacheKey = `${filter}-${limit}`;
+
   if (animeCache.has(cacheKey)) {
     return animeCache.get(cacheKey) as Anime[];
   }
+
   const uniqueMap = new Map<number, Anime>();
   let page = 1;
+  
   while (uniqueMap.size < limit && page <= 5) {
     const response = await axiosInstance.get("/top/anime", {
       params: { filter, limit: 25, page },

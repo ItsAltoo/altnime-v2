@@ -9,6 +9,14 @@ import { useRouter } from "next/navigation";
 interface BookmarkButtonProps {
   userEmail?: string; // Optional: akan menggunakan session email jika tidak disediakan
   animeId: number;
+  imageUrl: string;
+  title?: string;
+  name?: string;
+  status?: string;
+  type?: string;
+  score?: string;
+  episodes?: number;
+  chapters?: number;
   onSuccess?: () => void; // Optional callback ketika bookmark berhasil ditambah
   onError?: (error: string) => void; // Optional callback ketika terjadi error
 }
@@ -16,10 +24,18 @@ interface BookmarkButtonProps {
 const BookmarkButton = ({
   userEmail,
   animeId,
+  imageUrl,
+  title,
+  name,
+  status,
+  type,
+  score,
+  episodes,
+  chapters,
   onSuccess,
   onError,
 }: BookmarkButtonProps) => {
-  const { data: session, status } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,12 +43,12 @@ const BookmarkButton = ({
     e.preventDefault();
 
     // Check if user is authenticated
-    if (status === "loading") {
+    if (sessionStatus === "loading") {
       toast.error("Please wait, checking authentication...");
       return;
     }
 
-    if (status === "unauthenticated" || !session?.user) {
+    if (sessionStatus === "unauthenticated" || !session?.user) {
       toast.warning("Please login to add bookmarks", {
         action: {
           label: "Login",
@@ -58,6 +74,14 @@ const BookmarkButton = ({
     const data = {
       userEmail: userEmail || session.user.email,
       animeId,
+      imageUrl,
+      title,
+      name,
+      status,
+      type,
+      score,
+      episodes,
+      chapters,
     };
 
     try {
@@ -143,7 +167,7 @@ const BookmarkButton = ({
   };
 
   // Show different button states based on authentication
-  if (status === "loading") {
+  if (sessionStatus === "loading") {
     return (
       <Button className="cursor-pointer" disabled>
         <BookIcon />
@@ -152,7 +176,7 @@ const BookmarkButton = ({
     );
   }
 
-  if (status === "unauthenticated") {
+  if (sessionStatus === "unauthenticated") {
     return (
       <Button
         onClick={handleBookmark}

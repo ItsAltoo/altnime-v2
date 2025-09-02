@@ -130,6 +130,19 @@ export interface AnimeDetail {
   }[];
 }
 
+export interface CardLibraryType {
+  id: string;
+  animeId: number;
+  imageUrl: string;
+  title?: string;
+  name?: string;
+  status?: string;
+  type?: string;
+  score?: number;
+  episodes?: number;
+  chapters?: number;
+  libraryId: string;
+}
 
 // Props
 export interface AnimeCarouselProps {

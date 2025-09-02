@@ -32,7 +32,7 @@ export const AnimeList = ({ limit }: { limit: number }) => {
               status={anime.status}
               title={anime.title}
               name={anime.name}
-              imageUrl={anime.images.jpg.image_url}
+              imageUrl={anime.images.webp.image_url}
               score={anime.score}
               episodes={anime.episodes}
               chapters={anime.chapters}

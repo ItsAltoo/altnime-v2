@@ -52,9 +52,10 @@ const Hero = () => {
                 className="relative h-screen items-center justify-center flex overflow-hidden"
               >
                 <Image
-                  src={anime.images.webp.large_image_url}
+                  src={anime.images.webp.image_url}
                   alt={`${anime.title} background`}
                   fill
+                  sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw"
                   className="object-cover -z-10 blur-xs brightness-[0.2] opacity-75"
                   priority={topAnimes.indexOf(anime) === 0}
                 />
@@ -90,7 +91,7 @@ const Hero = () => {
                     </div>
                   </div>
                   <Image
-                    src={anime.images.jpg.large_image_url}
+                    src={anime.images.webp.image_url}
                     alt={anime.title}
                     width={288}
                     height={432} 

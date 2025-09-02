@@ -2,12 +2,6 @@ import { animeCache, axiosInstance } from "@/services/api";
 import {  AnimeDetail } from "@/types";
 import { CancelToken } from "axios";
 
-/**
- * BARU: Fungsi untuk mengambil detail anime berdasarkan ID.
- * @param {number} id - MAL ID dari anime.
- * @param {CancelToken} cancelToken - Token untuk membatalkan request.
- * @returns {Promise<AnimeDetail>} Detail dari sebuah anime.
- */
 export const fetchAnimeById = async (
   id: number,
   cancelToken: CancelToken
