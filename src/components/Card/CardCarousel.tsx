@@ -10,7 +10,7 @@ import {
 import { AnimeCard } from "./Card";
 import { CardCarouselSkeleton } from "./CardCarouselLoad";
 import { AnimeCarouselProps } from "@/types";
-import { useFetchAnime } from "@/hooks/useCarouselAnime";
+import { useFetchAnime } from "@/lib/hooks/useCarouselAnime";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 

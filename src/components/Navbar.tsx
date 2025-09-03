@@ -116,24 +116,21 @@ function Navbar() {
                 className="w-full bg-black/60 backdrop-blur-2xl"
                 aria-describedby={undefined}
               >
-                {/* Search di panel */}
                 <SheetTitle>
                   <div className="flex items-center justify-center">
                     <div className="md:hidden flex items-center w-full max-w-sm">
                       <div className="relative flex-1 mt-12 mx-7">
-                        <SearchBar />
+                        <SearchBar onClick={() => setOpen(false)} />
                       </div>
                     </div>
                   </div>
                 </SheetTitle>
 
-                {/* Link list */}
                 <SheetHeader>
                   <ul className="flex flex-col gap-3">
                     {navLinks.map((link) => (
                       <li key={link.label}>
                         {link.href ? (
-                          // Simple link (like Home)
                           <Link
                             href={link.href}
                             onClick={() => {
@@ -147,7 +144,6 @@ function Navbar() {
                             {link.label}
                           </Link>
                         ) : (
-                          // Collapsible dropdown (like Seasons, Movies)
                           <Collapsible>
                             <CollapsibleTrigger className="w-full flex justify-between items-center rounded-md px-3 py-2 text-base font-medium hover:bg-accent hover:text-accent-foreground">
                               {link.label}

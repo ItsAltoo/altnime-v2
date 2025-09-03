@@ -5,7 +5,7 @@ import { PaginationComponent } from "@/components/Pagination";
 import Grid from "../Seasons/Grid";
 import Loading from "../Seasons/layout/AnimeListLoad";
 import { useParams, useSearchParams } from "next/navigation";
-import { useTopCategory } from "@/hooks/useTopCategory";
+import { useTopCategory } from "@/lib/hooks/useTopCategory";
 
 export const AnimeList = ({ limit }: { limit: number }) => {
   const { category } = useParams();

@@ -30,8 +30,6 @@ export const GET = async (req: Request) => {
   }
 };
 
-// api/library/route.ts
-
 export const POST = async (req: Request) => {
   try {
     const session = await getServerSession(authOptions);

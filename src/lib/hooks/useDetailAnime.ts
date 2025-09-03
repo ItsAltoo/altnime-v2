@@ -1,6 +1,6 @@
 import { jikan } from "@/services/api";
 import { Aired, AnimeDetail } from "@/types";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface UseDetailAnime extends AnimeDetail {
@@ -27,10 +27,13 @@ export const useDetailAnime = () => {
         setLoading(false);
       })
       .catch((err) => {
-        setError(`Failed to fetch anime details. ${err.message}`);
+        if (err.status === 404) {
+          redirect("/404");
+        }
+        setError(err.message);
         setLoading(false);
       });
-  }, [id]);
+  }, [id, category]);
 
   return { data, loading, error };
 };

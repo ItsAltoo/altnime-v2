@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios, { CancelTokenSource } from "axios";
 import { fetchAnimeData, animeCache } from "@/services/api";
-import { Anime, AnimeCardProps } from "@/types";
+import { Anime } from "@/types";
 
 interface UseFetchAnimeResult {
   animes: Data[];
@@ -29,7 +29,6 @@ export const useFetchAnime = (
     const cacheKey = `${filter}-${limit}`;
 
     const getAnime = async () => {
-      // 1. Set state awal
       setLoading(true);
       setError(null);
 
@@ -53,8 +52,8 @@ export const useFetchAnime = (
           setAnimes(result as Data[]);
         }
       } catch (err) {
+        // Ignore canceled requests
         if (axios.isCancel(err)) {
-          setError("Request canceled");
           return;
         }
 
@@ -68,7 +67,8 @@ export const useFetchAnime = (
           } else if (err.message.includes("timeout")) {
             errorMessage = "Connection timed out. Please check your internet.";
           } else if (err.message.includes("Network Error")) {
-            errorMessage = "Network issue. Please check your internet connection.";
+            errorMessage =
+              "Network issue. Please check your internet connection.";
           }
         }
 

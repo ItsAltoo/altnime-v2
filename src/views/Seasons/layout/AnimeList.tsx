@@ -4,7 +4,7 @@ import { AnimeCard } from "@/components/Card/Card";
 import Grid from "../Grid";
 import { PaginationComponent } from "@/components/Pagination";
 import Loading from "./AnimeListLoad";
-import { useSeasonAnime } from "@/hooks/useSeasonAnime";
+import { useSeasonAnime } from "@/lib/hooks/useSeasonAnime";
 
 export const AnimeList = ({
   year,

@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import { AnimeCard } from "@/components/Card/Card";
 import { PaginationComponent } from "@/components/Pagination";
 import Grid from "../Seasons/Grid";
-import { useAnimeSearch } from "@/hooks/useAnimeSearch";
+import { useAnimeSearch } from "@/lib/hooks/useAnimeSearch";
 import Loading from "../Seasons/layout/AnimeListLoad";
 
 export const AnimeList = ({ limit }: { limit: number }) => {

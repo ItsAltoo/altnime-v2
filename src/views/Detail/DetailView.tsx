@@ -1,4 +1,4 @@
-import { useDetailAnime } from "@/hooks/useDetailAnime";
+import { useDetailAnime } from "@/lib/hooks/useDetailAnime";
 import React from "react";
 import Heading from "./Heading";
 import { HeadingSkeleton } from "./HeadingLoad";

@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 interface BookmarkButtonProps {
-  userEmail?: string; // Optional: akan menggunakan session email jika tidak disediakan
+  userEmail?: string;
   animeId: number;
   imageUrl: string;
   title?: string;
@@ -17,8 +17,8 @@ interface BookmarkButtonProps {
   score?: string;
   episodes?: number;
   chapters?: number;
-  onSuccess?: () => void; // Optional callback ketika bookmark berhasil ditambah
-  onError?: (error: string) => void; // Optional callback ketika terjadi error
+  onSuccess?: () => void;
+  onError?: (error: string) => void;
 }
 
 const BookmarkButton = ({
@@ -39,10 +39,10 @@ const BookmarkButton = ({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
+
   const handleBookmark = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    // Check if user is authenticated
     if (sessionStatus === "loading") {
       toast.error("Please wait, checking authentication...");
       return;
@@ -87,14 +87,12 @@ const BookmarkButton = ({
     try {
       const response = await axios.post("/api/library", data);
 
-      // Handle successful response
       if (response.status === 200 || response.status === 201) {
         const successMessage =
           response.data.message || "Bookmark added successfully!";
         toast.success(successMessage);
         console.log("Bookmark added:", response.data);
 
-        // Call success callback if provided
         if (onSuccess) {
           onSuccess();
         }
@@ -188,6 +186,7 @@ const BookmarkButton = ({
       </Button>
     );
   }
+
 
   return (
     <>

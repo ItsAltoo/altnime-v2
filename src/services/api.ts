@@ -71,21 +71,28 @@ export const fetchAnimeData = async (
 
   const uniqueMap = new Map<number, Anime>();
   let page = 1;
-  
+
   while (uniqueMap.size < limit && page <= 5) {
-    const response = await axiosInstance.get("/top/anime", {
-      params: { filter, limit: 25, page },
-      cancelToken,
-    });
-    response.data?.data?.forEach((anime: Anime) => {
-      const hasExcludedGenre = anime.genres?.some((g) =>
-        excludedGenres.includes(g.mal_id)
-      );
-      if (!hasExcludedGenre && !uniqueMap.has(anime.mal_id)) {
-        uniqueMap.set(anime.mal_id, anime);
+    try {
+      const response = await axiosInstance.get("/top/anime", {
+        params: { filter, limit: 25, page },
+        cancelToken,
+      });
+      response.data?.data?.forEach((anime: Anime) => {
+        const hasExcludedGenre = anime.genres?.some((g) =>
+          excludedGenres.includes(g.mal_id)
+        );
+        if (!hasExcludedGenre && !uniqueMap.has(anime.mal_id)) {
+          uniqueMap.set(anime.mal_id, anime);
+        }
+      });
+      page++;
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        throw error; // Re-throw cancel errors to be handled by the hook
       }
-    });
-    page++;
+      throw error; // Re-throw other errors
+    }
   }
   const finalData = Array.from(uniqueMap.values()).slice(0, limit);
   animeCache.set(cacheKey, finalData);

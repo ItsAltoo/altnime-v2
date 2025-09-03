@@ -14,7 +14,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { HeroSkeleton } from "./HeroLoading";
-import { useHero } from "@/hooks/useHeroAnime";
+import { useHero } from "@/lib/hooks/useHeroAnime";
 
 const Hero = () => {
   const { topAnimes, loading, error } = useHero({
@@ -83,10 +83,6 @@ const Hero = () => {
                         variant="outline"
                         className="w-full sm:w-auto"
                       >
-                        <Link href={anime.url} target="_blank">
-                          <BookIcon className="mr-2 size-4" />
-                          Bookmark
-                        </Link>
                       </Button>
                     </div>
                   </div>
@@ -94,7 +90,7 @@ const Hero = () => {
                     src={anime.images.webp.image_url}
                     alt={anime.title}
                     width={288}
-                    height={432} 
+                    height={432}
                     className="max-h-80 w-auto rounded-md object-cover"
                     priority={topAnimes.indexOf(anime) === 0} // Prioritaskan gambar pertama
                   />
