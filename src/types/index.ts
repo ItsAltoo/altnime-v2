@@ -210,3 +210,18 @@ export interface HeadingDetailProps {
     favorites: number;
   };
 }
+
+export interface BookmarkButtonProps {
+  userEmail?: string;
+  animeId: number;
+  imageUrl: string;
+  title?: string;
+  name?: string;
+  status?: string;
+  type?: string;
+  score?: string;
+  episodes?: number;
+  chapters?: number;
+  onSuccess?: () => void;
+  onError?: (error: string) => void;
+}

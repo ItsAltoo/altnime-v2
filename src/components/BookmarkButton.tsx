@@ -1,25 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
-import { BookIcon, Loader2Icon } from "lucide-react";
+import { BookIcon, Loader2Icon, TrashIcon } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-
-interface BookmarkButtonProps {
-  userEmail?: string;
-  animeId: number;
-  imageUrl: string;
-  title?: string;
-  name?: string;
-  status?: string;
-  type?: string;
-  score?: string;
-  episodes?: number;
-  chapters?: number;
-  onSuccess?: () => void;
-  onError?: (error: string) => void;
-}
+import { BookmarkButtonProps } from "@/types";
 
 const BookmarkButton = ({
   userEmail,
@@ -38,7 +24,52 @@ const BookmarkButton = ({
   const { data: session, status: sessionStatus } = useSession();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
+  useEffect(() => {
+    const checkBookmarkStatus = async () => {
+      if (sessionStatus === "authenticated" && session?.user?.email) {
+        try {
+          const res = await axios.get(`/api/library/check/${animeId}`);
+          setIsBookmarked(res.data.isBookmarked);
+        } catch (error) {
+          toast.error("Failed to check bookmark status");
+        }
+      }
+    };
+
+    checkBookmarkStatus();
+  }, [animeId, session?.user?.email, sessionStatus]);
+
+  const handleRemoveBookmark = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const response = await axios.delete("/api/library", {
+        data: {
+          userEmail: userEmail || session?.user?.email,
+          animeId,
+        },
+      });
+
+      if (response.status === 200) {
+        toast.success("Bookmark removed successfully!");
+        setIsBookmarked(false);
+        if (onSuccess) onSuccess();
+      }
+    } catch (error: any) {
+      console.error("Error removing bookmark:", error);
+      const errorMessage =
+        error.response?.data?.error || "Failed to remove bookmark";
+      toast.error(errorMessage);
+      if (onError) onError(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleBookmark = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -91,11 +122,8 @@ const BookmarkButton = ({
         const successMessage =
           response.data.message || "Bookmark added successfully!";
         toast.success(successMessage);
-        console.log("Bookmark added:", response.data);
-
-        if (onSuccess) {
-          onSuccess();
-        }
+        setIsBookmarked(true);
+        if (onSuccess) onSuccess();
       }
     } catch (error: any) {
       console.error("Error adding bookmark:", error);
@@ -164,11 +192,10 @@ const BookmarkButton = ({
     }
   };
 
-  // Show different button states based on authentication
   if (sessionStatus === "loading") {
     return (
       <Button className="cursor-pointer" disabled>
-        <BookIcon />
+        <BookIcon className="mr-2" />
         Loading...
       </Button>
     );
@@ -181,24 +208,39 @@ const BookmarkButton = ({
         className="cursor-pointer"
         variant="outline"
       >
-        <BookIcon />
+        <BookIcon className="mr-2" />
         Please Sign In First
       </Button>
     );
   }
 
-
-  return (
-    <>
+  if (isBookmarked) {
+    return (
       <Button
-        onClick={handleBookmark}
+        onClick={handleRemoveBookmark}
         className="cursor-pointer"
+        variant={"destructive"}
         disabled={isLoading}
       >
-        <BookIcon />
-        {isLoading ? <Loader2Icon className="animate-spin" /> : "Bookmark"}
+        {isLoading ? (
+          <Loader2Icon className="animate-spin mr-2" />
+        ) : (
+          <TrashIcon className="mr-2" />
+        )}
+        Remove Bookmark
       </Button>
-    </>
+    );
+  }
+
+  return (
+    <Button
+      onClick={handleBookmark}
+      className="cursor-pointer"
+      disabled={isLoading}
+    >
+      <BookIcon className="mr-2" />
+      {isLoading ? <Loader2Icon className="animate-spin" /> : "Bookmark"}
+    </Button>
   );
 };
 

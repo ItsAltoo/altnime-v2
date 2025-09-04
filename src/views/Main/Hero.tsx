@@ -1,5 +1,5 @@
 "use client";
-import { ArrowRight, ArrowUpRight, BookIcon } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

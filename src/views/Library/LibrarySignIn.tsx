@@ -4,7 +4,7 @@ import React from "react";
 
 const LibrarySignIn = () => {
   return (
-    <div className="h-screen flex flex-col items-center justify-center text-xl relative">
+    <div className="h-screen flex flex-col items-center justify-center text-xl relative text-center">
       <h1>Sign In to Your Library</h1>
       <p>
         Please sign in to access your library.{" "}
@@ -17,7 +17,7 @@ const LibrarySignIn = () => {
         alt="Kita"
         width={400}
         height={400}
-        className="absolute bottom-0 right-10 brightness-75"
+        className="absolute bottom-0 md:right-10 brightness-75"
       />
     </div>
   );

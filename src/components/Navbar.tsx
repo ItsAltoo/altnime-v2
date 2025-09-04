@@ -42,8 +42,11 @@ function Navbar() {
         <nav className="flex h-full items-center justify-between px-3">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <h1 className="text-2xl font-bold tracking-wide bg-gradient-to-br from-primary via-[#0065F8] to-[#00CAFF] text-transparent bg-clip-text">
-              AltNime
+            <h1 className="md:text-2xl text-xl font-bold tracking-wide bg-gradient-to-br from-primary via-[#0065F8] to-[#00CAFF] text-transparent bg-clip-text">
+              AltNime{""}
+              <span className="rotate-5 inline-block bg-gradient-to-br from-primary via-[#8cff00] to-[#6EC207] text-transparent bg-clip-text animate-pulse">
+                &#123;List&#125;
+              </span>
             </h1>
           </Link>
 

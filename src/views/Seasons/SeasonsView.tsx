@@ -38,7 +38,9 @@ export const SeasonsView = ({ season }: { season: string }) => {
   return (
     <div className="p-4">
       <div className="flex items-center justify-center gap-4 mb-4">
-        <h1 className="text-2xl font-bold capitalize">Anime Season {season}</h1>
+        <h1 className="md:text-2xl text-xl font-bold capitalize">
+          Anime Season {season}
+        </h1>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline">{selectedYear}</Button>

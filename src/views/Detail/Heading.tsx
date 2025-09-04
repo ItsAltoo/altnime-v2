@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { HeadingDetailProps } from "@/types";
 import {
   ArrowLeft,
-  Book,
   Heart,
   Home,
   Star,
