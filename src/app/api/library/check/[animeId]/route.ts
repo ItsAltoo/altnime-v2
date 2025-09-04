@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { animeId: string } }
+  params : { params: Promise<{ animeId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -14,7 +14,8 @@ export async function GET(
       return NextResponse.json({ isBookmarked: false });
     }
 
-    const animeId = parseInt(params.animeId);
+    const { animeId } = await params.params;
+    const animeIdNumber = parseInt(animeId);
 
     const userLibrary = await prisma.library.findFirst({
       where: {
@@ -29,7 +30,7 @@ export async function GET(
     const bookmark = await prisma.cardLibrary.findFirst({
       where: {
         libraryId: userLibrary.id,
-        animeId: animeId,
+        animeId: animeIdNumber,
       },
     });
 
