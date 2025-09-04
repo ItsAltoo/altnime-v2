@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { BookIcon, Loader2Icon, TrashIcon } from "lucide-react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { BookmarkButtonProps } from "@/types";
 
-const BookmarkButton = ({
+interface ApiError {
+  error?: string;
+  message?: string;
+}
+
+const BookmarkButton  = ({
   userEmail,
   animeId,
   imageUrl,
@@ -60,7 +65,9 @@ const BookmarkButton = ({
         setIsBookmarked(false);
         if (onSuccess) onSuccess();
       }
-    } catch (error: any) {
+    } catch (err) {
+      const error = err as AxiosError<ApiError>;
+
       console.error("Error removing bookmark:", error);
       const errorMessage =
         error.response?.data?.error || "Failed to remove bookmark";
@@ -125,7 +132,8 @@ const BookmarkButton = ({
         setIsBookmarked(true);
         if (onSuccess) onSuccess();
       }
-    } catch (error: any) {
+    } catch (err) {
+      const error = err as AxiosError<ApiError>;
       console.error("Error adding bookmark:", error);
 
       if (error.response) {
