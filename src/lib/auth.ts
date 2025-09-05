@@ -6,6 +6,7 @@ import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -30,7 +31,11 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user || !user.password) {
-          throw new Error("No user found");
+          NextResponse.json(
+            { error: "User not found" },
+            { status: 404 }
+          );
+          return null;
         }
 
         const isValid = await bcrypt.compare(
@@ -39,7 +44,11 @@ export const authOptions: NextAuthOptions = {
         );
 
         if (!isValid) {
-          throw new Error("Invalid password");
+          NextResponse.json(
+            { error: "Invalid credentials" },
+            { status: 401 }
+          );
+          return null;
         }
 
         return { id: user.id, email: user.email, name: user.name };
