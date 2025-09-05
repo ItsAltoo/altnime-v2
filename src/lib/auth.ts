@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
@@ -65,3 +65,5 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
 };
+
+export default authOptions;
