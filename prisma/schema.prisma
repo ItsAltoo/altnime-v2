@@ -39,8 +39,8 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
-  name          String
-  email         String   
+  name          String?
+  email         String    @unique
   password      String?
   emailVerified DateTime? @map("email_verified")
   image         String?
@@ -50,7 +50,6 @@ model User {
   libraries     Library[]
 
   @@map("users")
-  @@unique([email,name])
 }
 
 model VerificationToken {

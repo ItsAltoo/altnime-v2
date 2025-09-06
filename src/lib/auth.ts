@@ -1,11 +1,9 @@
-import { NextResponse } from "next/server";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
-
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -24,18 +22,14 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
-        const user = await prisma.user.findFirst({
+        const user = await prisma.user.findUnique({
           where: {
             email: credentials?.email as string,
           },
         });
 
         if (!user || !user.password) {
-          NextResponse.json(
-            { error: "User not found" },
-            { status: 404 }
-          );
-          return null;
+          throw new Error("User not found");
         }
 
         const isValid = await bcrypt.compare(
@@ -44,11 +38,7 @@ export const authOptions: NextAuthOptions = {
         );
 
         if (!isValid) {
-          NextResponse.json(
-            { error: "Invalid credentials" },
-            { status: 401 }
-          );
-          return null;
+          throw new Error("Invalid credentials");
         }
 
         return { id: user.id, email: user.email, name: user.name };
