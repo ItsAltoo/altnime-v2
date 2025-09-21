@@ -35,6 +35,7 @@ export function AnimeCard({
             sizes="(max-width: 768px) 100vw, 33vw"
             fill
             priority={true}
+            unoptimized={true}
           />
         </div>
       </CardHeader>

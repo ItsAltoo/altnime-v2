@@ -58,6 +58,7 @@ const Hero = () => {
                   sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw"
                   className="object-cover -z-10 blur-xs brightness-[0.2] opacity-75"
                   priority={topAnimes.indexOf(anime) === 0}
+                  unoptimized={true}
                 />
                 <div className="flex flex-col-reverse items-center justify-around gap-8 p-1 lg:flex-row w-full">
                   <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -93,6 +94,7 @@ const Hero = () => {
                     height={432}
                     className="max-h-80 w-auto rounded-md object-cover"
                     priority={topAnimes.indexOf(anime) === 0} // Prioritaskan gambar pertama
+                    unoptimized={true}
                   />
                 </div>
               </CarouselItem>

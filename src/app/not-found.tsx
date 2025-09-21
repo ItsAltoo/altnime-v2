@@ -10,6 +10,7 @@ export default function NotFound() {
         width={100}
         height={100}
         priority={true}
+        unoptimized={true}
       />
       <div className="flex flex-col items-center justify-center">
         <h1 className="md:text-8xl text-6xl font-bold text-gray-800">404</h1>

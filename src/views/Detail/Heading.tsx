@@ -42,6 +42,7 @@ const Heading: React.FC<HeadingDetailProps> = ({
             sizes="(max-width: 768px) 100vw, (min-width: 768px) 50vw"
             className="object-cover w-full h-full blur-sm brightness-50"
             priority
+            unoptimized={true}
           />
         )}
       </div>
@@ -80,6 +81,7 @@ const Heading: React.FC<HeadingDetailProps> = ({
             className="w-40 md:w-52 h-auto rounded-lg flex-shrink-0"
             sizes="(max-width: 768px) 40vw, 208px"
             priority
+            unoptimized={true}
           />
 
           <div className="flex flex-col justify-between w-full md:h-80">

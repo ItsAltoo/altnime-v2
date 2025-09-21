@@ -37,6 +37,7 @@ const Footer = () => {
                 height={52}
                 width={52}
                 priority={false}
+                unoptimized={true}
               />
               <h2 className="text-xl font-semibold">{items.logo.title}</h2>
             </div>

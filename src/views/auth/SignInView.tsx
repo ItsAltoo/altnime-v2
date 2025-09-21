@@ -29,6 +29,7 @@ const AuthView = () => {
           fill
           sizes="(min-width: 640px) 50vw, 100vw"
           priority
+          unoptimized={true}
         />
       </div>
     </div>

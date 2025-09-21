@@ -18,6 +18,8 @@ const LibrarySignIn = () => {
         width={400}
         height={400}
         className="absolute bottom-0 md:right-10 brightness-75"
+        priority={true}
+        unoptimized={true}
       />
     </div>
   );

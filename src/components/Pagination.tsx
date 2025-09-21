@@ -28,6 +28,7 @@ export const PaginationComponent: React.FC<PaginationProps> = ({
     }
 
     const pages = [];
+    
     for (let i = start; i <= end; i++) {
       pages.push(i);
     }
