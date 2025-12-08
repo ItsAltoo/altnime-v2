@@ -83,8 +83,7 @@ const Hero = () => {
                         asChild
                         variant="outline"
                         className="w-full sm:w-auto"
-                      >
-                      </Button>
+                      ></Button>
                     </div>
                   </div>
                   <Image

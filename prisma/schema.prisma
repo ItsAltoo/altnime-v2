@@ -14,15 +14,14 @@ model Account {
   type              String
   provider          String
   providerAccountId String  @map("provider_account_id")
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -39,16 +38,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  password      String?
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id                  String               @id @default(cuid())
+  name                String?
+  email               String               @unique
+  password            String?
+  emailVerified       DateTime?            @map("email_verified")
+  image               String?
   passwordResetTokens PasswordResetToken[]
-  libraries     Library[]
+  accounts            Account[]
+  libraries           Library[]
+  sessions            Session[]
 
   @@map("users")
 }
@@ -63,25 +62,25 @@ model VerificationToken {
 }
 
 model PasswordResetToken {
-  id        String   @id @default(cuid())
-  token     String   @unique @db.Text
-  userId    String
-  expires   DateTime
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id      String   @id @default(cuid())
+  token   String   @unique
+  userId  String
+  expires DateTime
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Library {
-  id        String   @id @default(cuid())
+  id        String        @id @default(cuid())
   userId    String
   userEmail String?
   cards     CardLibrary[]
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@map("libraries")
 }
 
 model CardLibrary {
-  id        String   @id @default(cuid())
+  id        String  @id @default(cuid())
   animeId   Int
   imageUrl  String
   title     String?
@@ -91,9 +90,8 @@ model CardLibrary {
   score     String?
   episodes  Int?
   chapters  Int?
-
   libraryId String
-  library   Library  @relation(fields: [libraryId], references: [id], onDelete: Cascade)
+  library   Library @relation(fields: [libraryId], references: [id], onDelete: Cascade)
 
   @@map("card_libraries")
 }
