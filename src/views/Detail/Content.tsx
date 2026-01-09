@@ -1,25 +1,6 @@
 import HeroVideoDialog from "@/components/magicui/hero-video-dialog";
+import { ContentProps } from "@/types";
 import React from "react";
-
-interface ContentProps {
-  synopsis: string;
-  background: string;
-  trailer: {
-    url: string;
-    images: {
-      image_url: string;
-    };
-  };
-  info: {
-    studios: string[];
-    producers: string[];
-    season: string;
-    duration: string;
-    source: string;
-    titles: string[];
-    about?: string;
-  };
-}
 
 const Content: React.FC<ContentProps> = ({
   synopsis,

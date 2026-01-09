@@ -225,3 +225,28 @@ export interface BookmarkButtonProps {
   onSuccess?: () => void;
   onError?: (error: string) => void;
 }
+
+export interface ContentProps {
+  synopsis: string;
+  background: string;
+  trailer: {
+    url: string;
+    images: {
+      image_url: string;
+    };
+  };
+  info: {
+    studios: string[];
+    producers: string[];
+    season: string;
+    duration: string;
+    source: string;
+    titles: string[];
+    about?: string;
+  };
+}
+
+export interface ApiError {
+  error?: string;
+  message?: string;
+}

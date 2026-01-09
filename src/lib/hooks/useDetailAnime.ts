@@ -24,6 +24,8 @@ export const useDetailAnime = () => {
       .then((res) => {
         const detail = res.data.data;
         setData(detail);
+        console.log(detail);
+        
         setLoading(false);
       })
       .catch((err) => {

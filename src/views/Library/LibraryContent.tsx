@@ -14,7 +14,7 @@ const LibraryContent = () => {
 
   return (
     <>
-      {libraryData[0]?.cards.length > 0 ? (
+      {libraryData[0].cards.length > 0 ? (
         <>
           <Grid>
             {libraryData.map((library) =>

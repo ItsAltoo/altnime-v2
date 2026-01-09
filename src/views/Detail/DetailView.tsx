@@ -55,7 +55,7 @@ const DetailView = () => {
           trailer={{
             url: data.trailer?.embed_url,
             images: {
-              image_url: data.trailer?.images?.large_image_url,
+              image_url: data.trailer?.images?.image_url,
             },
           }}
         />
