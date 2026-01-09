@@ -3,15 +3,9 @@ import BookmarkButton from "@/components/BookmarkButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { HeadingDetailProps } from "@/types";
-import {
-  ArrowLeft,
-  Heart,
-  Home,
-  Star,
-  Trophy,
-  UserRound,
-} from "lucide-react";
+import { ArrowLeft, Heart, Home, Star, Trophy, UserRound } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -123,13 +117,14 @@ const Heading: React.FC<HeadingDetailProps> = ({
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                 {genres &&
                   genres.map((genre) => (
-                    <Badge
-                      variant={"outline"}
-                      key={genre.mal_id}
-                      className="px-3 py-1 text-xs md:text-sm font-bold tracking-wide"
-                    >
-                      {genre.name}
-                    </Badge>
+                    <Link href={`/genres/${genre.mal_id}`} key={genre.mal_id}>
+                      <Badge
+                        variant={"outline"}
+                        className="px-3 py-1 text-xs md:text-sm font-bold tracking-wide"
+                      >
+                        {genre.name}
+                      </Badge>
+                    </Link>
                   ))}
               </div>
 
