@@ -40,7 +40,7 @@ export const getNavLinks = (selectedYear: string | number): NavItem[] => [
     ],
   },
   {
-    label: "Top List",
+    label: "Details",
     items: [
       {
         label: "Top Anime",
@@ -54,6 +54,10 @@ export const getNavLinks = (selectedYear: string | number): NavItem[] => [
         label: "Top Manga",
         href: `/top/manga?page=1`,
       },
+      {
+        label: "Genres",
+        href: `/genres/1`,
+      }
     ],
   },
 ];

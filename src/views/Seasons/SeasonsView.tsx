@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useYearStore } from "@/lib/stores/useYearStore";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const SeasonsView = ({ season }: { season: string }) => {
   const currentYear = new Date().getFullYear();
@@ -43,17 +44,22 @@ export const SeasonsView = ({ season }: { season: string }) => {
         </h1>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline">{selectedYear}</Button>
+            <Button variant="ghost" className="cursor-pointer text-xl">{selectedYear}</Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="h-40">
-            {years.map((year) => (
-              <DropdownMenuItem
-                key={year}
-                onClick={() => handleChangeYear(year)}
-              >
-                {year}
-              </DropdownMenuItem>
-            ))}
+          <DropdownMenuContent>
+            <ScrollArea className="h-40 w-full">
+              <div className="grid md:grid-cols-3 gap-2 grid-cols-1">
+                {years.map((year) => (
+                  <DropdownMenuItem
+                    key={year}
+                    onClick={() => handleChangeYear(year)}
+                    className="cursor-pointer"
+                  >
+                    {year}
+                  </DropdownMenuItem>
+                ))}
+              </div>
+            </ScrollArea>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

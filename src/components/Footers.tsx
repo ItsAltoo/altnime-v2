@@ -16,9 +16,10 @@ const items: FooterProps = {
     alt: "logo",
     title: "ItsAlto",
   },
-  description:"Anime and manga data is provided by MyAnimeList via the Jikan API. This project is not affiliated with MyAnimeList.net.",
+  description:
+    "Anime and manga data is provided by MyAnimeList via the Jikan API. This project is not affiliated with MyAnimeList.net.",
   // socialLinks: defaultSocialLinks,
-  copyright: "© 2025 AltNime. All rights reserved.",
+  copyright: "© 2026 AltNime. All rights reserved.",
   legalLinks: defaultLegalLinks,
 };
 
