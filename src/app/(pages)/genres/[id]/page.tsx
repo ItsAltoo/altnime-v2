@@ -1,10 +1,9 @@
 "use client";
 import GenresView from "@/views/Genres/GenresView";
-import { useParams } from "next/navigation";
 import React, { Suspense } from "react";
 
-const page = () => {
-  const { id } = useParams();
+const page = async ({params}: {params: Promise<{id: number}>}) => {
+  const { id } = await params;
 
   return (
     <section className="p-4">
