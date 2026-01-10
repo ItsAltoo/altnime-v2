@@ -1,4 +1,5 @@
-import React, { Suspense } from "react";
+"use client";
+import React, { Suspense, useState } from "react";
 import Grid from "../Seasons/Grid";
 import { AnimeCard } from "@/components/Card/Card";
 import { PaginationComponent } from "@/components/Pagination";
@@ -12,12 +13,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Scroll } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 
 const GenresView = ({ id }: { id: number }) => {
   const router = useRouter();
+  const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const {
     results,
     loading,
@@ -30,6 +30,7 @@ const GenresView = ({ id }: { id: number }) => {
   } = useGenres({
     id,
     limit: 24,
+    status: selectedStatus === "all" ? undefined : selectedStatus,
   });
 
   const handleChangeGenre = (genreId: number) => {
@@ -49,7 +50,7 @@ const GenresView = ({ id }: { id: number }) => {
       <div className="flex items-center justify-center gap-4 mb-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="text-2xl  cursor-pointer">
+            <Button variant="ghost" className="text-2xl cursor-pointer underline decoration-blue-700 ">
               {selectedGenre}
             </Button>
           </DropdownMenuTrigger>
@@ -67,6 +68,36 @@ const GenresView = ({ id }: { id: number }) => {
                 ))}
               </div>
             </ScrollArea>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="cursor-pointer text-2xl">
+              {selectedStatus === "all" && "All"}
+              {selectedStatus === "complete" && "Complete"}
+              {selectedStatus === "upcoming" && "Upcoming"}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem
+              onClick={() => setSelectedStatus("all")}
+              className="cursor-pointer"
+            >
+              All
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => setSelectedStatus("complete")}
+              className="cursor-pointer"
+            >
+              Complete
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => setSelectedStatus("upcoming")}
+              className="cursor-pointer"
+            >
+              Upcoming
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

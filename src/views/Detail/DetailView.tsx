@@ -1,3 +1,4 @@
+"use client";
 import { useDetailAnime } from "@/lib/hooks/useDetailAnime";
 import React from "react";
 import Heading from "./Heading";

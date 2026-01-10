@@ -17,7 +17,15 @@ interface Genre {
   count: number;
 }
 
-export const useGenres = ({ id, limit }: { id: number; limit: number }) => {
+export const useGenres = ({
+  id,
+  limit,
+  status,
+}: {
+  id: number;
+  limit: number;
+  status?: string;
+}) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const searchParams = useSearchParams();
@@ -42,7 +50,15 @@ export const useGenres = ({ id, limit }: { id: number; limit: number }) => {
 
     const fetchGenresResults = async (currentPage: number) => {
       jikan
-        .get(`/anime`, { params: { genres: id, page: currentPage } })
+        .get(`/anime`, {
+          params: {
+            genres: id,
+            page: currentPage,
+            order_by: "favorites",
+            sort: "desc",
+            status: status,
+          },
+        })
         .then((res) => {
           const data = res.data;
 
@@ -102,7 +118,7 @@ export const useGenres = ({ id, limit }: { id: number; limit: number }) => {
     return () => {
       isMounted = false;
     };
-  }, [id, page, limit]);
+  }, [id, page, limit, status]);
 
   useEffect(() => {
     jikan.get(`/genres/anime`).then((res) => {
